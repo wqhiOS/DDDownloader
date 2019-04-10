@@ -1,0 +1,606 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E3DCEE4B225DD078006D1E72 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE4A225DD078006D1E72 /* AppDelegate.m */; };
+		E3DCEE53225DD078006D1E72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3DCEE52225DD078006D1E72 /* Assets.xcassets */; };
+		E3DCEE56225DD078006D1E72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3DCEE54225DD078006D1E72 /* LaunchScreen.storyboard */; };
+		E3DCEE59225DD078006D1E72 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE58225DD078006D1E72 /* main.m */; };
+		E3DCEE63225DD079006D1E72 /* DDDownloaderDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE62225DD079006D1E72 /* DDDownloaderDemoTests.m */; };
+		E3DCEE6E225DD079006D1E72 /* DDDownloaderDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE6D225DD079006D1E72 /* DDDownloaderDemoUITests.m */; };
+		E3DCEE7F225DD0D8006D1E72 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE7E225DD0D8006D1E72 /* MainViewController.m */; };
+		E3DCEE82225DD0FE006D1E72 /* DDDownloaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE81225DD0FE006D1E72 /* DDDownloaderManager.m */; };
+		E3DCEE85225DD28C006D1E72 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE84225DD28C006D1E72 /* SettingViewController.m */; };
+		E3EF99B3225DD38F00F412A6 /* MyDownloadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EF99B2225DD38F00F412A6 /* MyDownloadsViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E3DCEE5F225DD079006D1E72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3DCEE3E225DD078006D1E72 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3DCEE45225DD078006D1E72;
+			remoteInfo = DDDownloaderDemo;
+		};
+		E3DCEE6A225DD079006D1E72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E3DCEE3E225DD078006D1E72 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3DCEE45225DD078006D1E72;
+			remoteInfo = DDDownloaderDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E3DCEE46225DD078006D1E72 /* DDDownloaderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDDownloaderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3DCEE49225DD078006D1E72 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E3DCEE4A225DD078006D1E72 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E3DCEE52225DD078006D1E72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E3DCEE55225DD078006D1E72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E3DCEE57225DD078006D1E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3DCEE58225DD078006D1E72 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E3DCEE5E225DD079006D1E72 /* DDDownloaderDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDDownloaderDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3DCEE62225DD079006D1E72 /* DDDownloaderDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDownloaderDemoTests.m; sourceTree = "<group>"; };
+		E3DCEE64225DD079006D1E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3DCEE69225DD079006D1E72 /* DDDownloaderDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDDownloaderDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3DCEE6D225DD079006D1E72 /* DDDownloaderDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDownloaderDemoUITests.m; sourceTree = "<group>"; };
+		E3DCEE6F225DD079006D1E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E3DCEE7D225DD0D8006D1E72 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		E3DCEE7E225DD0D8006D1E72 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		E3DCEE80225DD0FE006D1E72 /* DDDownloaderManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDownloaderManager.h; sourceTree = "<group>"; };
+		E3DCEE81225DD0FE006D1E72 /* DDDownloaderManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDownloaderManager.m; sourceTree = "<group>"; };
+		E3DCEE83225DD28C006D1E72 /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		E3DCEE84225DD28C006D1E72 /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		E3EF99B1225DD38F00F412A6 /* MyDownloadsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDownloadsViewController.h; sourceTree = "<group>"; };
+		E3EF99B2225DD38F00F412A6 /* MyDownloadsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDownloadsViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E3DCEE43225DD078006D1E72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3DCEE5B225DD079006D1E72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3DCEE66225DD079006D1E72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E3DCEE3D225DD078006D1E72 = {
+			isa = PBXGroup;
+			children = (
+				E3DCEE48225DD078006D1E72 /* DDDownloaderDemo */,
+				E3DCEE61225DD079006D1E72 /* DDDownloaderDemoTests */,
+				E3DCEE6C225DD079006D1E72 /* DDDownloaderDemoUITests */,
+				E3DCEE47225DD078006D1E72 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E3DCEE47225DD078006D1E72 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E3DCEE46225DD078006D1E72 /* DDDownloaderDemo.app */,
+				E3DCEE5E225DD079006D1E72 /* DDDownloaderDemoTests.xctest */,
+				E3DCEE69225DD079006D1E72 /* DDDownloaderDemoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E3DCEE48225DD078006D1E72 /* DDDownloaderDemo */ = {
+			isa = PBXGroup;
+			children = (
+				E3DCEE7B225DD07D006D1E72 /* DDDonwloader */,
+				E3DCEE49225DD078006D1E72 /* AppDelegate.h */,
+				E3DCEE4A225DD078006D1E72 /* AppDelegate.m */,
+				E3DCEE7C225DD08C006D1E72 /* Controller */,
+				E3DCEE52225DD078006D1E72 /* Assets.xcassets */,
+				E3DCEE54225DD078006D1E72 /* LaunchScreen.storyboard */,
+				E3DCEE57225DD078006D1E72 /* Info.plist */,
+				E3DCEE58225DD078006D1E72 /* main.m */,
+			);
+			path = DDDownloaderDemo;
+			sourceTree = "<group>";
+		};
+		E3DCEE61225DD079006D1E72 /* DDDownloaderDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				E3DCEE62225DD079006D1E72 /* DDDownloaderDemoTests.m */,
+				E3DCEE64225DD079006D1E72 /* Info.plist */,
+			);
+			path = DDDownloaderDemoTests;
+			sourceTree = "<group>";
+		};
+		E3DCEE6C225DD079006D1E72 /* DDDownloaderDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				E3DCEE6D225DD079006D1E72 /* DDDownloaderDemoUITests.m */,
+				E3DCEE6F225DD079006D1E72 /* Info.plist */,
+			);
+			path = DDDownloaderDemoUITests;
+			sourceTree = "<group>";
+		};
+		E3DCEE7B225DD07D006D1E72 /* DDDonwloader */ = {
+			isa = PBXGroup;
+			children = (
+				E3DCEE80225DD0FE006D1E72 /* DDDownloaderManager.h */,
+				E3DCEE81225DD0FE006D1E72 /* DDDownloaderManager.m */,
+			);
+			path = DDDonwloader;
+			sourceTree = "<group>";
+		};
+		E3DCEE7C225DD08C006D1E72 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E3DCEE7D225DD0D8006D1E72 /* MainViewController.h */,
+				E3DCEE7E225DD0D8006D1E72 /* MainViewController.m */,
+				E3EF99B1225DD38F00F412A6 /* MyDownloadsViewController.h */,
+				E3EF99B2225DD38F00F412A6 /* MyDownloadsViewController.m */,
+				E3DCEE83225DD28C006D1E72 /* SettingViewController.h */,
+				E3DCEE84225DD28C006D1E72 /* SettingViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E3DCEE45225DD078006D1E72 /* DDDownloaderDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3DCEE72225DD079006D1E72 /* Build configuration list for PBXNativeTarget "DDDownloaderDemo" */;
+			buildPhases = (
+				E3DCEE42225DD078006D1E72 /* Sources */,
+				E3DCEE43225DD078006D1E72 /* Frameworks */,
+				E3DCEE44225DD078006D1E72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DDDownloaderDemo;
+			productName = DDDownloaderDemo;
+			productReference = E3DCEE46225DD078006D1E72 /* DDDownloaderDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E3DCEE5D225DD079006D1E72 /* DDDownloaderDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3DCEE75225DD079006D1E72 /* Build configuration list for PBXNativeTarget "DDDownloaderDemoTests" */;
+			buildPhases = (
+				E3DCEE5A225DD079006D1E72 /* Sources */,
+				E3DCEE5B225DD079006D1E72 /* Frameworks */,
+				E3DCEE5C225DD079006D1E72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3DCEE60225DD079006D1E72 /* PBXTargetDependency */,
+			);
+			name = DDDownloaderDemoTests;
+			productName = DDDownloaderDemoTests;
+			productReference = E3DCEE5E225DD079006D1E72 /* DDDownloaderDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		E3DCEE68225DD079006D1E72 /* DDDownloaderDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E3DCEE78225DD079006D1E72 /* Build configuration list for PBXNativeTarget "DDDownloaderDemoUITests" */;
+			buildPhases = (
+				E3DCEE65225DD079006D1E72 /* Sources */,
+				E3DCEE66225DD079006D1E72 /* Frameworks */,
+				E3DCEE67225DD079006D1E72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E3DCEE6B225DD079006D1E72 /* PBXTargetDependency */,
+			);
+			name = DDDownloaderDemoUITests;
+			productName = DDDownloaderDemoUITests;
+			productReference = E3DCEE69225DD079006D1E72 /* DDDownloaderDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E3DCEE3E225DD078006D1E72 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "吴启晗";
+				TargetAttributes = {
+					E3DCEE45225DD078006D1E72 = {
+						CreatedOnToolsVersion = 10.2;
+					};
+					E3DCEE5D225DD079006D1E72 = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = E3DCEE45225DD078006D1E72;
+					};
+					E3DCEE68225DD079006D1E72 = {
+						CreatedOnToolsVersion = 10.2;
+						TestTargetID = E3DCEE45225DD078006D1E72;
+					};
+				};
+			};
+			buildConfigurationList = E3DCEE41225DD078006D1E72 /* Build configuration list for PBXProject "DDDownloaderDemo" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E3DCEE3D225DD078006D1E72;
+			productRefGroup = E3DCEE47225DD078006D1E72 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E3DCEE45225DD078006D1E72 /* DDDownloaderDemo */,
+				E3DCEE5D225DD079006D1E72 /* DDDownloaderDemoTests */,
+				E3DCEE68225DD079006D1E72 /* DDDownloaderDemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E3DCEE44225DD078006D1E72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3DCEE56225DD078006D1E72 /* LaunchScreen.storyboard in Resources */,
+				E3DCEE53225DD078006D1E72 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3DCEE5C225DD079006D1E72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3DCEE67225DD079006D1E72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E3DCEE42225DD078006D1E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3DCEE59225DD078006D1E72 /* main.m in Sources */,
+				E3DCEE7F225DD0D8006D1E72 /* MainViewController.m in Sources */,
+				E3EF99B3225DD38F00F412A6 /* MyDownloadsViewController.m in Sources */,
+				E3DCEE82225DD0FE006D1E72 /* DDDownloaderManager.m in Sources */,
+				E3DCEE4B225DD078006D1E72 /* AppDelegate.m in Sources */,
+				E3DCEE85225DD28C006D1E72 /* SettingViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3DCEE5A225DD079006D1E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3DCEE63225DD079006D1E72 /* DDDownloaderDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E3DCEE65225DD079006D1E72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E3DCEE6E225DD079006D1E72 /* DDDownloaderDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E3DCEE60225DD079006D1E72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E3DCEE45225DD078006D1E72 /* DDDownloaderDemo */;
+			targetProxy = E3DCEE5F225DD079006D1E72 /* PBXContainerItemProxy */;
+		};
+		E3DCEE6B225DD079006D1E72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E3DCEE45225DD078006D1E72 /* DDDownloaderDemo */;
+			targetProxy = E3DCEE6A225DD079006D1E72 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E3DCEE54225DD078006D1E72 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E3DCEE55225DD078006D1E72 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E3DCEE70225DD079006D1E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		E3DCEE71225DD079006D1E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E3DCEE73225DD079006D1E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5E3A9G5UU5;
+				INFOPLIST_FILE = DDDownloaderDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuqh.DDDownloaderDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E3DCEE74225DD079006D1E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5E3A9G5UU5;
+				INFOPLIST_FILE = DDDownloaderDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuqh.DDDownloaderDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E3DCEE76225DD079006D1E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5E3A9G5UU5;
+				INFOPLIST_FILE = DDDownloaderDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuqh.DDDownloaderDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DDDownloaderDemo.app/DDDownloaderDemo";
+			};
+			name = Debug;
+		};
+		E3DCEE77225DD079006D1E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5E3A9G5UU5;
+				INFOPLIST_FILE = DDDownloaderDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuqh.DDDownloaderDemoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DDDownloaderDemo.app/DDDownloaderDemo";
+			};
+			name = Release;
+		};
+		E3DCEE79225DD079006D1E72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5E3A9G5UU5;
+				INFOPLIST_FILE = DDDownloaderDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuqh.DDDownloaderDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DDDownloaderDemo;
+			};
+			name = Debug;
+		};
+		E3DCEE7A225DD079006D1E72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5E3A9G5UU5;
+				INFOPLIST_FILE = DDDownloaderDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuqh.DDDownloaderDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DDDownloaderDemo;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E3DCEE41225DD078006D1E72 /* Build configuration list for PBXProject "DDDownloaderDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3DCEE70225DD079006D1E72 /* Debug */,
+				E3DCEE71225DD079006D1E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3DCEE72225DD079006D1E72 /* Build configuration list for PBXNativeTarget "DDDownloaderDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3DCEE73225DD079006D1E72 /* Debug */,
+				E3DCEE74225DD079006D1E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3DCEE75225DD079006D1E72 /* Build configuration list for PBXNativeTarget "DDDownloaderDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3DCEE76225DD079006D1E72 /* Debug */,
+				E3DCEE77225DD079006D1E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E3DCEE78225DD079006D1E72 /* Build configuration list for PBXNativeTarget "DDDownloaderDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3DCEE79225DD079006D1E72 /* Debug */,
+				E3DCEE7A225DD079006D1E72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E3DCEE3E225DD078006D1E72 /* Project object */;
+}
