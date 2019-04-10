@@ -10,4 +10,14 @@
 
 @implementation DDDownloaderManager
 
+static DDDownloaderManager *instance;
++(instancetype)sharedManager {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[DDDownloaderManager alloc] init];
+    });
+    return instance;
+}
+
+
 @end

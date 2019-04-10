@@ -14,6 +14,7 @@
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) NSMutableArray *dataArray;
 
 @end
 
@@ -26,20 +27,36 @@
     self.view.backgroundColor = UIColor.whiteColor;
     self.title = @"DDDownloader";
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"setting" style:UIBarButtonItemStylePlain target:self action:@selector(setting)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"myDonwloads" style:UIBarButtonItemStylePlain target:self action:@selector(toMyDownloads)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"setting"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(setting)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"downloads"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(toMyDownloads)];
     
+    [self loadData];
     [self.view addSubview:self.tableView];
     
 }
-- (void)setting {
-    [self.navigationController pushViewController:[SettingViewController new] animated:YES];
+
+#pragma mark - load data
+- (void)loadData {
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"downloadSource" ofType:@"plist"];
+    self.dataArray = [[NSMutableArray alloc] initWithContentsOfFile:plistPath];
 }
 
-- (void)toMyDownloads {
-    [self.navigationController pushViewController:[MyDownloadsViewController new] animated:YES];
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.dataArray.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    MainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(MainCell.class) forIndexPath:indexPath];
+    cell.sourceDict = self.dataArray[indexPath.row];
+    return cell;
 }
 
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:true];
+}
+
+#pragma mark - Setter
 - (UITableView *)tableView {
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -52,12 +69,13 @@
     return _tableView;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+#pragma mark - Action
+- (void)setting {
+    [self.navigationController pushViewController:[SettingViewController new] animated:YES];
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(MainCell.class) forIndexPath:indexPath];
-    return cell;
+
+- (void)toMyDownloads {
+    [self.navigationController pushViewController:[MyDownloadsViewController new] animated:YES];
 }
 
 

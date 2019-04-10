@@ -45,4 +45,10 @@
     [_slider setThumbImage:img forState:UIControlStateNormal];
 }
 
+- (void)setSourceDict:(NSDictionary *)sourceDict {
+    _sourceDict = sourceDict;
+    
+    self.titleLabel.text = sourceDict[@"title"];
+}
+
 @end

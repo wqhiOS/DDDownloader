@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MainCell : UITableViewCell
 
+@property (nonatomic, weak) NSDictionary *sourceDict;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -27,11 +27,11 @@
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FR5-yt-jQo">
                         <rect key="frame" x="225" y="15" width="80" height="30"/>
-                        <color key="backgroundColor" red="0.49429602692490593" green="0.89503002481608596" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.24573916375869209" green="0.48430820532299268" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="Bfs-8L-pjz"/>
                         </constraints>
-                        <state key="normal" title="status">
+                        <state key="normal" title="download">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
                         <connections>
