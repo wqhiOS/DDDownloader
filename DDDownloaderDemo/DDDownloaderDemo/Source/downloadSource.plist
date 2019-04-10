@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>url</key>
+		<string>https://www.sample-videos.com/video123/mp4/480/big_buck_bunny_480p_30mb.mp4</string>
+		<key>title</key>
+		<string>big_buck_bunny</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>https://www.sample-videos.com/video123/flv/720/big_buck_bunny_720p_30mb.flv</string>
+		<key>title</key>
+		<string>30mb.flv</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>https://www.sample-videos.com/video123/3gp/240/big_buck_bunny_240p_30mb.3gp</string>
+		<key>title</key>
+		<string>30mb.3gp</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>https://www.sample-videos.com/zip/100mb.zip</string>
+		<key>title</key>
+		<string>100mb.zip</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_30mb.mp4</string>
+		<key>title</key>
+		<string>big_buck_bunny20mb.mp4</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201804/5a165205fb924d709e7a6449653bb63f_512.mp4</string>
+		<key>title</key>
+		<string>music</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>https://media.w3.org/2010/05/sintel/trailer.mp4</string>
+		<key>title</key>
+		<string>trailer.mp4</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>http://mirror.aarnet.edu.au/pub/TED-talks/911Mothers_2010W-480p.mp4</string>
+		<key>title</key>
+		<string>mothers.mp4</string>
+	</dict>
+</array>
+</plist>
