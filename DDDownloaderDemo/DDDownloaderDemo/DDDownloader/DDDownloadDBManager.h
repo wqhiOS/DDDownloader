@@ -1,5 +1,5 @@
 //
-//  DDDownloaderManager.h
+//  DDDownloadDBManager.h
 //  DDDownloaderDemo
 //
 //  Created by wuqh on 2019/4/10.
@@ -10,8 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DDDownloaderManager : NSObject
-
+@interface DDDownloadDBManager : NSObject
 
 @end
 

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MainCell : UITableViewCell
 
+@property (nonatomic, copy) void(^clickStatusButton)(UIButton*);
+
 @property (nonatomic, weak) NSDictionary *sourceDict;
 
 @end

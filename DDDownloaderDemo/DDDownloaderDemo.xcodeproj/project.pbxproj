@@ -14,12 +14,16 @@
 		E3DCEE63225DD079006D1E72 /* DDDownloaderDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE62225DD079006D1E72 /* DDDownloaderDemoTests.m */; };
 		E3DCEE6E225DD079006D1E72 /* DDDownloaderDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE6D225DD079006D1E72 /* DDDownloaderDemoUITests.m */; };
 		E3DCEE7F225DD0D8006D1E72 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE7E225DD0D8006D1E72 /* MainViewController.m */; };
-		E3DCEE82225DD0FE006D1E72 /* DDDownloaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE81225DD0FE006D1E72 /* DDDownloaderManager.m */; };
 		E3DCEE85225DD28C006D1E72 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE84225DD28C006D1E72 /* SettingViewController.m */; };
 		E3EF99B3225DD38F00F412A6 /* MyDownloadsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EF99B2225DD38F00F412A6 /* MyDownloadsViewController.m */; };
 		E3EF99B6225DD5AC00F412A6 /* downloadSource.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3EF99B5225DD5AC00F412A6 /* downloadSource.plist */; };
 		E3EF99C3225DDB5700F412A6 /* MainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EF99C1225DDB5700F412A6 /* MainCell.m */; };
 		E3EF99C4225DDB5700F412A6 /* MainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3EF99C2225DDB5700F412A6 /* MainCell.xib */; };
+		E3EF99CB225DED3E00F412A6 /* DDDownloadFileHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EF99CA225DED3E00F412A6 /* DDDownloadFileHandler.m */; };
+		E3EF99CE225DED5700F412A6 /* DDDownloadDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EF99CD225DED5700F412A6 /* DDDownloadDBManager.m */; };
+		E3EF99D1225DED6700F412A6 /* DDDownloadModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EF99D0225DED6700F412A6 /* DDDownloadModel.m */; };
+		E3EF99D3225DEDDA00F412A6 /* DDDownloadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EF99D2225DEDDA00F412A6 /* DDDownloadManager.m */; };
+		E3EF99D7225DF6A200F412A6 /* NSString+DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = E3EF99D6225DF6A200F412A6 /* NSString+DDExtensions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +59,7 @@
 		E3DCEE6F225DD079006D1E72 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E3DCEE7D225DD0D8006D1E72 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E3DCEE7E225DD0D8006D1E72 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		E3DCEE80225DD0FE006D1E72 /* DDDownloaderManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDownloaderManager.h; sourceTree = "<group>"; };
-		E3DCEE81225DD0FE006D1E72 /* DDDownloaderManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDownloaderManager.m; sourceTree = "<group>"; };
+		E3DCEE80225DD0FE006D1E72 /* DDDownloadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDownloadManager.h; sourceTree = "<group>"; };
 		E3DCEE83225DD28C006D1E72 /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		E3DCEE84225DD28C006D1E72 /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		E3EF99B1225DD38F00F412A6 /* MyDownloadsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDownloadsViewController.h; sourceTree = "<group>"; };
@@ -66,6 +69,16 @@
 		E3EF99C1225DDB5700F412A6 /* MainCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainCell.m; sourceTree = "<group>"; };
 		E3EF99C2225DDB5700F412A6 /* MainCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainCell.xib; sourceTree = "<group>"; };
 		E3EF99C5225DDE9B00F412A6 /* DDDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDownloader.h; sourceTree = "<group>"; };
+		E3EF99C9225DED3E00F412A6 /* DDDownloadFileHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDownloadFileHandler.h; sourceTree = "<group>"; };
+		E3EF99CA225DED3E00F412A6 /* DDDownloadFileHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDownloadFileHandler.m; sourceTree = "<group>"; };
+		E3EF99CC225DED5700F412A6 /* DDDownloadDBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDownloadDBManager.h; sourceTree = "<group>"; };
+		E3EF99CD225DED5700F412A6 /* DDDownloadDBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDownloadDBManager.m; sourceTree = "<group>"; };
+		E3EF99CF225DED6700F412A6 /* DDDownloadModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDownloadModel.h; sourceTree = "<group>"; };
+		E3EF99D0225DED6700F412A6 /* DDDownloadModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DDDownloadModel.m; sourceTree = "<group>"; };
+		E3EF99D2225DEDDA00F412A6 /* DDDownloadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDDownloadManager.m; sourceTree = "<group>"; };
+		E3EF99D4225DEE0F00F412A6 /* DDDownloadStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDDownloadStatus.h; sourceTree = "<group>"; };
+		E3EF99D5225DF6A200F412A6 /* NSString+DDExtensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+DDExtensions.h"; sourceTree = "<group>"; };
+		E3EF99D6225DF6A200F412A6 /* NSString+DDExtensions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+DDExtensions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,8 +165,16 @@
 			isa = PBXGroup;
 			children = (
 				E3EF99C5225DDE9B00F412A6 /* DDDownloader.h */,
-				E3DCEE80225DD0FE006D1E72 /* DDDownloaderManager.h */,
-				E3DCEE81225DD0FE006D1E72 /* DDDownloaderManager.m */,
+				E3DCEE80225DD0FE006D1E72 /* DDDownloadManager.h */,
+				E3EF99D2225DEDDA00F412A6 /* DDDownloadManager.m */,
+				E3EF99CF225DED6700F412A6 /* DDDownloadModel.h */,
+				E3EF99D0225DED6700F412A6 /* DDDownloadModel.m */,
+				E3EF99CC225DED5700F412A6 /* DDDownloadDBManager.h */,
+				E3EF99CD225DED5700F412A6 /* DDDownloadDBManager.m */,
+				E3EF99C9225DED3E00F412A6 /* DDDownloadFileHandler.h */,
+				E3EF99CA225DED3E00F412A6 /* DDDownloadFileHandler.m */,
+				E3EF99D4225DEE0F00F412A6 /* DDDownloadStatus.h */,
+				E3EF99D8225DF6C200F412A6 /* tools */,
 			);
 			path = DDDownloader;
 			sourceTree = "<group>";
@@ -187,6 +208,15 @@
 				E3EF99C2225DDB5700F412A6 /* MainCell.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		E3EF99D8225DF6C200F412A6 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				E3EF99D5225DF6A200F412A6 /* NSString+DDExtensions.h */,
+				E3EF99D6225DF6A200F412A6 /* NSString+DDExtensions.m */,
+			);
+			path = tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,10 +350,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3EF99CE225DED5700F412A6 /* DDDownloadDBManager.m in Sources */,
+				E3EF99D7225DF6A200F412A6 /* NSString+DDExtensions.m in Sources */,
 				E3DCEE59225DD078006D1E72 /* main.m in Sources */,
+				E3EF99CB225DED3E00F412A6 /* DDDownloadFileHandler.m in Sources */,
 				E3DCEE7F225DD0D8006D1E72 /* MainViewController.m in Sources */,
+				E3EF99D3225DEDDA00F412A6 /* DDDownloadManager.m in Sources */,
 				E3EF99B3225DD38F00F412A6 /* MyDownloadsViewController.m in Sources */,
-				E3DCEE82225DD0FE006D1E72 /* DDDownloaderManager.m in Sources */,
+				E3EF99D1225DED6700F412A6 /* DDDownloadModel.m in Sources */,
 				E3EF99C3225DDB5700F412A6 /* MainCell.m in Sources */,
 				E3DCEE4B225DD078006D1E72 /* AppDelegate.m in Sources */,
 				E3DCEE85225DD28C006D1E72 /* SettingViewController.m in Sources */,

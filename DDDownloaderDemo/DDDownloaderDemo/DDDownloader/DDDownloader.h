@@ -9,6 +9,6 @@
 #ifndef DDDownloader_h
 #define DDDownloader_h
 
-
+#import "DDDownloadManager.h"
 
 #endif /* DDDownloader_h */

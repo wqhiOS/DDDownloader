@@ -34,6 +34,11 @@
 }
 
 - (IBAction)statusButtonClick:(UIButton *)sender {
+    
+    if (self.clickStatusButton) {
+        self.clickStatusButton(sender);
+    }
+    
 }
 
 - (void)setupSlider {

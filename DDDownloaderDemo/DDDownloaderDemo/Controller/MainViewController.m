@@ -24,30 +24,43 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self loadData];
+    [self setupUI];
+    [UIColor whiteColor];
+}
+
+#pragma mark - priate
+/**
+ load local data with plist
+ */
+- (void)loadData {
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"downloadSource" ofType:@"plist"];
+    self.dataArray = [[NSMutableArray alloc] initWithContentsOfFile:plistPath];
+}
+
+- (void)setupUI {
     self.view.backgroundColor = UIColor.whiteColor;
     self.title = @"DDDownloader";
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"setting"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(setting)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"downloads"]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(toMyDownloads)];
     
-    [self loadData];
-    [self.view addSubview:self.tableView];
     
+    [self.view addSubview:self.tableView];
 }
-
-#pragma mark - load data
-- (void)loadData {
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"downloadSource" ofType:@"plist"];
-    self.dataArray = [[NSMutableArray alloc] initWithContentsOfFile:plistPath];
-}
-
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArray.count;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(MainCell.class) forIndexPath:indexPath];
     cell.sourceDict = self.dataArray[indexPath.row];
+    cell.clickStatusButton = ^(UIButton * _Nonnull statusButton) {
+        
+        //start or pause
+        
+    };
     return cell;
 }
 
