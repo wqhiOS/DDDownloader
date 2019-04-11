@@ -33,15 +33,19 @@
 #pragma mark - notification
 - (void)downloadNotification:(NSNotification *)notification {
     
+    
+    
     DDDownloadModel *downloadModel = notification.userInfo[DD_NotificationModelKey];
     
     for (NSDictionary  *dict in self.dataArray) {
         if ([dict[@"url"] isEqualToString:downloadModel.url]) {
             NSInteger index = [self.dataArray indexOfObject:dict];
-            MainCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-            if (cell != nil) {
-                cell.downloadModel = downloadModel;
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MainCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+                if (cell != nil) {
+                    cell.downloadModel = downloadModel;
+                }
+            });
             break;
         }
     }

@@ -14,14 +14,14 @@
 
 #pragma mark - static property
 + (NSString *)resumeDataDirectory {
-    return [NSString stringWithFormat:@"%@/resumeData/",NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)];
+    return [NSString stringWithFormat:@"%@/resumeData/",NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject];
 }
 
 + (NSString *)downloadDirectory {
-    return [NSString stringWithFormat:@"%@/DDDownloads/",NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)];
+    return [NSString stringWithFormat:@"%@/DDDownloads/",NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).lastObject];
 }
 + (NSString *)databaseFilePath {
-    return [NSString stringWithFormat:@"%@/DDDownloader.sqlite",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)];
+    return [NSString stringWithFormat:@"%@/DDDownloader.sqlite",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject];
 }
 
 #pragma mark - static methpd

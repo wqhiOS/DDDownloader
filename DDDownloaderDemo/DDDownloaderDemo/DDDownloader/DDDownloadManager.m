@@ -95,6 +95,7 @@ static DDDownloadManager *_instance;
                 [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * _Nonnull downloadModel) {
                     downloadModel.status = DDDownloadStatusPause;
                     [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+                    [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
                 }];
             }else {
                 NSAssert(YES, @"resumeData write fail");
@@ -152,21 +153,31 @@ didFinishDownloadingToURL:(NSURL *)location {
     
     NSString *url = downloadTask.currentRequest.URL.absoluteString;
     
+    if ([NSFileManager.defaultManager fileExistsAtPath:[DDDownloadFileHandler getDownloadFilePathWithUrl:url]]) {
+        [NSFileManager.defaultManager removeItemAtPath:[DDDownloadFileHandler getDownloadFilePathWithUrl:url] error:nil];
+    }
+    
     NSError *error;
     [NSFileManager.defaultManager moveItemAtURL:location toURL:[NSURL fileURLWithPath:[DDDownloadFileHandler getDownloadFilePathWithUrl:url]] error:&error];
+    
     if (error) {
         NSLog(@"%@",error);
-        [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * _Nonnull downloadModel) {
-            downloadModel.status = DDDownloadStatusError;
-            [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
-            [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+        [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * downloadModel) {
+            if (downloadModel) {
+                downloadModel.status = DDDownloadStatusError;
+                [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+                [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+                
+            }
         }];
         
     }else {
-        [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * _Nonnull downloadModel) {
-            downloadModel.status = DDDownloadStatusSuccess;
-            [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
-            [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+        [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * downloadModel) {
+            if (downloadModel) {
+                downloadModel.status = DDDownloadStatusSuccess;
+                [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+                [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+            }
         }];
     }
 
@@ -177,18 +188,16 @@ didFinishDownloadingToURL:(NSURL *)location {
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *url = downloadTask.currentRequest.URL.absoluteString;
-        
-        DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
-        downloadModel.fileSize = totalBytesExpectedToWrite;
-        downloadModel.recievedSize = totalBytesWritten;
-        downloadModel.progress = (totalBytesWritten*1.0) / (totalBytesExpectedToWrite*1.0);
-        downloadModel.status = DDDownloadStatusDownloading;
-        downloadModel.url = url;
-        
-        [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
-    });
+    NSString *url = downloadTask.currentRequest.URL.absoluteString;
+    
+    DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
+    downloadModel.fileSize = totalBytesExpectedToWrite;
+    downloadModel.recievedSize = totalBytesWritten;
+    downloadModel.progress = (totalBytesWritten*1.0) / (totalBytesExpectedToWrite*1.0);
+    downloadModel.status = DDDownloadStatusDownloading;
+    downloadModel.url = url;
+    
+    [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
     
 }
 
@@ -197,6 +206,7 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
 expectedTotalBytes:(int64_t)expectedTotalBytes {
     NSLog(@"###### continu");
 }
+
 
 
 @end

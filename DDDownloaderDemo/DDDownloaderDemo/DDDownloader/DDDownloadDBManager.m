@@ -13,7 +13,7 @@
 
 const NSString *table_name = @"downloads";
 
-const NSString *key_downloadId = @"downloadId";
+//const NSString *key_downloadId = @"downloadId";
 const NSString *key_url = @"url";
 const NSString *key_status = @"status";
 const NSString *key_localpath = @"localpath";
@@ -59,21 +59,23 @@ static DDDownloadDBManager *_instance;
         self.database = [[FMDatabase alloc] initWithPath:DDDownloadFileHandler.databaseFilePath];
         
         if ([self.database open]) {
-            // 8 col
+            // 9 col
             NSString *createDownloadsTableSql = [NSString stringWithFormat:@"create table if not exists %@ (\
-                                                 %@ integer primary key autoincrement not null,\
-                                                 %@ text not null\
-                                                 %@ integer\
-                                                 %@ text\
-                                                 %@ float\
-                                                 %@ text\
-                                                 %@ text\
-                                                 %@ text\
-                                                 %@ text\
-                                                 %@ text)",
-                                                 table_name,key_downloadId,key_url,key_status,key_localpath,key_progress,key_userId,key_type,key_category,key_customId,key_extra];
+                                                 %@ text primary key,\
+                                                 %@ text,\
+                                                 %@ integer,\
+                                                 %@ text,\
+                                                 %@ float,\
+                                                 %@ text,\
+                                                 %@ text,\
+                                                 %@ text,\
+                                                 %@ text)"
+            ,table_name,key_url,key_status,key_localpath,key_progress,key_userId,key_type,key_category,key_customId,key_extra];
             
             created = [self.database executeUpdate:createDownloadsTableSql];
+            if (created == NO) {
+                NSLog(@"%@",self.database.lastError);
+            }
             [self.database close];
         }
     }
@@ -113,7 +115,7 @@ static DDDownloadDBManager *_instance;
     NSString *extra = downoadModel.extra ? : @"";
     
     
-    NSString *insertDownloadSql = [NSString stringWithFormat:@"insert or replace into %@ (%@,%@,%@,%@,%@,%@,%@,%@,%@) values (?,?,?,?,?,?,?,?,?,?)",table_name,key_url,key_status,key_localpath,key_progress,key_userId,key_type,key_category,key_customId,key_extra];
+    NSString *insertDownloadSql = [NSString stringWithFormat:@"insert or replace into %@ (%@,%@,%@,%@,%@,%@,%@,%@,%@) values (?,?,?,?,?,?,?,?,?)",table_name,key_url,key_status,key_localpath,key_progress,key_userId,key_type,key_category,key_customId,key_extra];
     [self.database executeUpdate:insertDownloadSql withArgumentsInArray:@[url,status,localpath,progress,userId,type,category,customId,extra]];
     [self.database close];
     
@@ -142,6 +144,25 @@ static DDDownloadDBManager *_instance;
     
     [self.database close];
 }
+
+- (void)queryDownloadModelWithUrl:(NSString *)url complete:(void (^)(DDDownloadModel * _Nullable))complete {
+    if ([self openDatabase] == NO) {
+        complete(nil);
+        return;
+    }
+    NSString *queryDonwloadModelSql = [NSString stringWithFormat:@"select * from %@ where %@ = '%@'",table_name,key_url,url];
+    FMResultSet *resultSet = [self.database executeQuery:queryDonwloadModelSql];
+    if (resultSet.next) {
+        DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
+        [downloadModel setValuesForKeysWithDictionary:resultSet.resultDictionary];
+        complete(downloadModel);
+    }else {
+        complete(nil);
+    }
+    
+}
+
+
 - (BOOL)deleteDownloadModelsWithUrls:(NSMutableArray<NSString *> *)urls {
     
     if ([self openDatabase] == NO) {

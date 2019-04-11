@@ -33,19 +33,19 @@
     
     switch (downloadModel.status) {
         case DDDownloadStatusWait:
-            self.titleLabel.text = @"wait";
+            [self.statusButton setTitle:@"wait" forState:UIControlStateNormal];
             break;
         case DDDownloadStatusPause:
-            self.titleLabel.text = @"puase";
+            [self.statusButton setTitle:@"pause" forState:UIControlStateNormal];
             break;
         case DDDownloadStatusDownloading:
-            self.titleLabel.text = @"downloading";
+            [self.statusButton setTitle:@"loading" forState:UIControlStateNormal];
             break;
         case DDDownloadStatusSuccess:
-            self.titleLabel.text = @"success";
+            [self.statusButton setTitle:@"success" forState:UIControlStateNormal];
             break;
         case DDDownloadStatusError:
-            self.titleLabel.text = @"error";
+            [self.statusButton setTitle:@"error" forState:UIControlStateNormal];
             break;
         default:
             break;
