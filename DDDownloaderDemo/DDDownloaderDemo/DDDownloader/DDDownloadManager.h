@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class DDDownloadModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(instancetype)sharedManager;
 
+- (void)download:(DDDownloadModel *)downloadModel;
+- (void)suspend:(DDDownloadModel *)downloadModel;
+- (void)remove:(DDDownloadModel *)downloadModel;
+- (BOOL)isDownloadingWithUrl:(NSString *)url;
 
 
 @end

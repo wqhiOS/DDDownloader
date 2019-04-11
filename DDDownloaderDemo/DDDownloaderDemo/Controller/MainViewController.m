@@ -56,8 +56,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(MainCell.class) forIndexPath:indexPath];
     cell.sourceDict = self.dataArray[indexPath.row];
+    
+    __weak typeof(self) weakSelf = self;
     cell.clickStatusButton = ^(UIButton * _Nonnull statusButton) {
-        
         //start or pause
         
     };

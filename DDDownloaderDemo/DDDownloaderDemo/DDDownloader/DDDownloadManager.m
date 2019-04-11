@@ -90,8 +90,21 @@ static DDDownloadManager *_instance;
     }];
 }
 
-- (void)delete:(DDDownloadModel *)downloadModel {
+- (void)remove:(DDDownloadModel *)downloadModel {
     
+}
+
+- (BOOL)isDownloadingWithUrl:(NSString *)url {
+    for (NSURLSessionDownloadTask *task in self.downloadTasks.allValues) {
+        if ([task.currentRequest.URL.absoluteString isEqualToString:url]) {
+            if (task.state == NSURLSessionTaskStateRunning) {
+                return YES;
+            }else {
+                return NO;
+            }
+        }
+    }
+    return NO;
 }
 
 #pragma mark - private method
