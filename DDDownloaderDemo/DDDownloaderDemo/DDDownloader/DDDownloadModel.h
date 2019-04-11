@@ -15,13 +15,39 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DDDownloadModel : NSObject
 
+/**
+ net url
+ */
 @property (nonatomic, copy) NSString *url;
 
+
+/**
+ download status
+ */
 @property (nonatomic, assign) DDDownloadStatus status;
 
+
+/**
+ local file path
+ */
 @property (nonatomic, copy) NSString *localpath;
 
+/**
+ prgress 0~1
+ */
 @property (nonatomic, assign) CGFloat progress;
+
+/**
+ total file size
+ */
+@property (nonatomic, assign) NSInteger fileSize;
+
+
+/**
+ download recieved size
+ */
+@property (nonatomic, assign) NSInteger recievedSize;
+
 
 /**
  The following four parameters are used by the user according to the business logic
