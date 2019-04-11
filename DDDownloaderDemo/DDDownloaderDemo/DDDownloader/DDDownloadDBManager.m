@@ -116,6 +116,7 @@ static DDDownloadDBManager *_instance;
     
     
     NSString *insertDownloadSql = [NSString stringWithFormat:@"insert or replace into %@ (%@,%@,%@,%@,%@,%@,%@,%@,%@) values (?,?,?,?,?,?,?,?,?)",table_name,key_url,key_status,key_localpath,key_progress,key_userId,key_type,key_category,key_customId,key_extra];
+    NSLog(@"%@",insertDownloadSql);
     [self.database executeUpdate:insertDownloadSql withArgumentsInArray:@[url,status,localpath,progress,userId,type,category,customId,extra]];
     [self.database close];
     

@@ -62,14 +62,22 @@ static DDDownloadManager *_instance;
 - (void)download:(DDDownloadModel *)downloadModel {
     
     //validate url
-    if (downloadModel.url.length < 0) {
+    if ((downloadModel.url.length) < 0 || ([NSURL URLWithString:downloadModel.url] == nil)) {
         return;
     }
     
+    // is downloading
     if ([self isDownloadingWithUrl:downloadModel.url]) {
         return;
     }
+    // is completed
+    [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:downloadModel.url complete:^(DDDownloadModel *downloadModel) {
+        if (downloadModel != nil && downloadModel.status == DDDownloadStatusSuccess) {
+            return;
+        }
+    }];
     
+    // It's time to download
     NSData *resumeData = [self getResumeDataWithUrl:downloadModel.url];
     NSURLSessionDownloadTask *downloadTask;
     if (resumeData) {
@@ -94,8 +102,9 @@ static DDDownloadManager *_instance;
             if ([self setResumeDataWithUrl:url resumeData:resumeData]) {
                 [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * _Nonnull downloadModel) {
                     downloadModel.status = DDDownloadStatusPause;
-                    [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+                    downloadModel.progress = (downloadTask.countOfBytesReceived*1.0) / (downloadTask.countOfBytesExpectedToReceive*1.0);
                     [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+                    [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
                 }];
             }else {
                 NSAssert(YES, @"resumeData write fail");
@@ -205,6 +214,21 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
  didResumeAtOffset:(int64_t)fileOffset
 expectedTotalBytes:(int64_t)expectedTotalBytes {
     NSLog(@"###### continu");
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    NSLog(@"###### error");
+    NSLog(@"%@",error);
+    NSLog(@"errorCode: %ld",error.code);
+    NSLog(@"%@",error.description);
+    
+    if (error.code == 2) {
+        
+        //Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"
+        //The wrong resumeData was used
+        //e.g ResumeData was not deleted after the download was successful,So in the next download use this previous resumeData
+        
+    }
 }
 
 

@@ -10,11 +10,11 @@
 #define DDDownloadStatus_h
 
 typedef NS_ENUM(NSInteger, DDDownloadStatus) {
-    DDDownloadStatusWait,
-    DDDownloadStatusPause,
-    DDDownloadStatusDownloading,
-    DDDownloadStatusSuccess,
-    DDDownloadStatusError
+    DDDownloadStatusWait = 0,
+    DDDownloadStatusDownloading = 1,
+    DDDownloadStatusPause = 2,
+    DDDownloadStatusSuccess = 3,
+    DDDownloadStatusError = 4
 };
 
 
