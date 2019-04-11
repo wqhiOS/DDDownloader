@@ -142,20 +142,19 @@ static DDDownloadDBManager *_instance;
     
     [self.database close];
 }
-
-- (BOOL)deleteDownloadModels: (NSMutableArray<DDDownloadModel*>*)downloadModels {
+- (BOOL)deleteDownloadModelsWithUrls:(NSMutableArray<NSString *> *)urls {
     
     if ([self openDatabase] == NO) {
         return NO;
     }
     
-    for (DDDownloadModel *downloadModel  in downloadModels) {
-        NSString *deleteSql = [NSString stringWithFormat:@"delete from %@ WHERE %@ = '%@'",table_name,key_url,downloadModel.url];
+    for (NSString *url  in urls) {
+        NSString *deleteSql = [NSString stringWithFormat:@"delete from %@ WHERE %@ = '%@'",table_name,key_url,url];
         [self.database executeUpdate:deleteSql];
     }
     [self.database close];
     
     return YES;
-    
 }
+
 @end

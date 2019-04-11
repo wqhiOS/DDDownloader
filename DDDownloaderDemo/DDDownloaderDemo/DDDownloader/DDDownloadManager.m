@@ -11,7 +11,7 @@
 #import "DDDownloadModel.h"
 #import "DDDownloadDBManager.h"
 
-@interface DDDownloadManager()<NSURLSessionDelegate>
+@interface DDDownloadManager()<NSURLSessionDownloadDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
 @property (nonatomic, strong) NSMutableDictionary<NSString*,NSURLSessionDownloadTask*> *downloadTasks;
@@ -77,11 +77,16 @@ static DDDownloadManager *_instance;
 
 }
 
-- (void)suspend:(DDDownloadModel *)downloadModel {
-    NSURLSessionDownloadTask *downloadTask = self.downloadTasks[downloadModel.url];
+- (void)suspendWithUrl:(NSString *)url {
+    NSURLSessionDownloadTask *downloadTask = self.downloadTasks[url];
     [downloadTask cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
         if (resumeData) {
-            if ([self setResumeDataWithUrl:downloadModel.url resumeData:resumeData]) {
+            if ([self setResumeDataWithUrl:url resumeData:resumeData]) {
+                [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * _Nonnull downloadModel) {
+                    downloadModel.status = DDDownloadStatusPause;
+                    [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+                }];
+            }else {
                 NSAssert(YES, @"resumeData write fail");
             }
         }else {
@@ -89,9 +94,16 @@ static DDDownloadManager *_instance;
         }
     }];
 }
-
-- (void)remove:(DDDownloadModel *)downloadModel {
+- (void)deleteWithUrls:(NSMutableArray<NSString *> *)urls {
     
+    //cancel task
+    for (NSString *url in urls) {
+        NSURLSessionDownloadTask *downloadTask = self.downloadTasks[url];
+        [downloadTask cancel];
+    }
+    
+    // delete downloadModels
+    [DDDownloadDBManager.sharedManager deleteDownloadModelsWithUrls:urls];
 }
 
 - (BOOL)isDownloadingWithUrl:(NSString *)url {
@@ -123,5 +135,24 @@ static DDDownloadManager *_instance;
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
     NSLog(@"%s",__FUNCTION__);
 }
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+didFinishDownloadingToURL:(NSURL *)location {
+     NSLog(@"%s",__FUNCTION__);
+}
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+      didWriteData:(int64_t)bytesWritten
+ totalBytesWritten:(int64_t)totalBytesWritten
+totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+     NSLog(@"%s",__FUNCTION__);
+}
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+ didResumeAtOffset:(int64_t)fileOffset
+expectedTotalBytes:(int64_t)expectedTotalBytes {
+     NSLog(@"%s",__FUNCTION__);
+}
+
 
 @end

@@ -16,8 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 +(instancetype)sharedManager;
 
 - (void)download:(DDDownloadModel *)downloadModel;
-- (void)suspend:(DDDownloadModel *)downloadModel;
-- (void)remove:(DDDownloadModel *)downloadModel;
+- (void)suspendWithUrl:(NSString *)url;
+- (void)deleteWithUrls:(NSMutableArray<NSString*> *)urls;
+
 - (BOOL)isDownloadingWithUrl:(NSString *)url;
 
 

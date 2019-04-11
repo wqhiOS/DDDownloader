@@ -10,6 +10,7 @@
 #import "SettingViewController.h"
 #import "MyDownloadsViewController.h"
 #import "MainCell.h"
+#import "DDDownloader.h"
 
 @interface MainViewController ()<UITableViewDataSource,UITableViewDelegate>
 
@@ -55,12 +56,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(MainCell.class) forIndexPath:indexPath];
-    cell.sourceDict = self.dataArray[indexPath.row];
+    NSDictionary *sourceDict = self.dataArray[indexPath.row];
+    cell.sourceDict = sourceDict;
     
-    __weak typeof(self) weakSelf = self;
+//    __weak typeof(self) weakSelf = self;
     cell.clickStatusButton = ^(UIButton * _Nonnull statusButton) {
         //start or pause
         
+        if ([DDDownloadManager.sharedManager isDownloadingWithUrl:sourceDict[@"url"]]) {
+            //cancel operation
+            DDDownloadManager.sharedManager suspend:<#(nonnull DDDownloadModel *)#>
+        }else {
+            //to download operation
+        }
     };
     return cell;
 }

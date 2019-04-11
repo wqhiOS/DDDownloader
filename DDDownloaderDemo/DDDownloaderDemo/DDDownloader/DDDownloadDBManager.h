@@ -18,8 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)insertDownloadModel:(DDDownloadModel *)downoadModel;
 
 - (void)queryDownloadModelsComplete:(void(^)(NSMutableArray<DDDownloadModel*> *))complete;
+- (void)queryDownloadModelWithUrl:(NSString*)url complete:(void(^)(DDDownloadModel *))complete;
 
-- (BOOL)deleteDownloadModels: (NSMutableArray<DDDownloadModel*>*)downloadModels;
+- (BOOL)deleteDownloadModelsWithUrls: (NSMutableArray<NSString*>*)urls;
 
 
 @end
