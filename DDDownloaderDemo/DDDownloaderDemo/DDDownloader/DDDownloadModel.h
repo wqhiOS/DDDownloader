@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  local file path
  */
-@property (nonatomic, copy) NSString *localpath;
+@property (readonly, nonatomic, copy) NSString *localpath;
 
 /**
  prgress 0~1

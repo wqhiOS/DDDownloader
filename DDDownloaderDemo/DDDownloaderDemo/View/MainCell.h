@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class DDDownloadModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) void(^clickStatusButton)(UIButton*);
 
 @property (nonatomic, weak) NSDictionary *sourceDict;
+
+@property (nonatomic, strong) DDDownloadModel *downloadModel;
 
 @end
 

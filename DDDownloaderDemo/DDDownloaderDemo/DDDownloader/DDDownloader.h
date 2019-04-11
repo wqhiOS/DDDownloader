@@ -10,5 +10,7 @@
 #define DDDownloader_h
 
 #import "DDDownloadManager.h"
+#import "DDDownloadModel.h"
+#import "NSString+DDExtensions.h"
 
 #endif /* DDDownloader_h */

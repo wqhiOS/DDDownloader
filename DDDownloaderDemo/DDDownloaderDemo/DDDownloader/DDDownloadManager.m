@@ -10,13 +10,23 @@
 #import "DDDownloadFileHandler.h"
 #import "DDDownloadModel.h"
 #import "DDDownloadDBManager.h"
-
+#import "NSString+DDExtensions.h"
 @interface DDDownloadManager()<NSURLSessionDownloadDelegate>
 
 @property (nonatomic, strong) NSURLSession *session;
+
+/**
+ all tasks
+ */
 @property (nonatomic, strong) NSMutableDictionary<NSString*,NSURLSessionDownloadTask*> *downloadTasks;
 
+/**
+ dowloding tasks
+ */
+@property (nonatomic, strong) NSMutableArray<NSURLSessionDownloadTask*> *downloadingTasks;
+
 @end
+
 
 @implementation DDDownloadManager
 
@@ -32,7 +42,9 @@ static DDDownloadManager *_instance;
 - (instancetype)init {
     if (self = [super init]) {
         
+        self.maximumDownloading = 3;
         self.downloadTasks = [[NSMutableDictionary alloc]init];
+        self.downloadingTasks = [NSMutableArray array];
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"com.wuqh.DDDownloader"];
         config.timeoutIntervalForRequest = 10;
@@ -54,11 +66,9 @@ static DDDownloadManager *_instance;
         return;
     }
     
-    // is downloading
-    if (downloadModel.status == DDDownloadStatusDownloading) {
+    if ([self isDownloadingWithUrl:downloadModel.url]) {
         return;
     }
-    
     
     NSData *resumeData = [self getResumeDataWithUrl:downloadModel.url];
     NSURLSessionDownloadTask *downloadTask;
@@ -74,7 +84,7 @@ static DDDownloadManager *_instance;
     
     //save DDDownloadModel
     [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
-
+    
 }
 
 - (void)suspendWithUrl:(NSString *)url {
@@ -133,25 +143,59 @@ static DDDownloadManager *_instance;
 
 #pragma mark - NSURLSessionDelegate
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
-    NSLog(@"%s",__FUNCTION__);
+    NSLog(@"###### didFinishEventsForBackgroundURLSession");
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location {
-     NSLog(@"%s",__FUNCTION__);
+    NSLog(@"###### success");
+    
+    NSString *url = downloadTask.currentRequest.URL.absoluteString;
+    
+    NSError *error;
+    [NSFileManager.defaultManager moveItemAtURL:location toURL:[NSURL fileURLWithPath:[DDDownloadFileHandler getDownloadFilePathWithUrl:url]] error:&error];
+    if (error) {
+        NSLog(@"%@",error);
+        [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * _Nonnull downloadModel) {
+            downloadModel.status = DDDownloadStatusError;
+            [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+            [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+        }];
+        
+    }else {
+        [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * _Nonnull downloadModel) {
+            downloadModel.status = DDDownloadStatusSuccess;
+            [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+            [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+        }];
+    }
+
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
       didWriteData:(int64_t)bytesWritten
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
-     NSLog(@"%s",__FUNCTION__);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *url = downloadTask.currentRequest.URL.absoluteString;
+        
+        DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
+        downloadModel.fileSize = totalBytesExpectedToWrite;
+        downloadModel.recievedSize = totalBytesWritten;
+        downloadModel.progress = (totalBytesWritten*1.0) / (totalBytesExpectedToWrite*1.0);
+        downloadModel.status = DDDownloadStatusDownloading;
+        downloadModel.url = url;
+        
+        [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+    });
+    
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
  didResumeAtOffset:(int64_t)fileOffset
 expectedTotalBytes:(int64_t)expectedTotalBytes {
-     NSLog(@"%s",__FUNCTION__);
+    NSLog(@"###### continu");
 }
 
 

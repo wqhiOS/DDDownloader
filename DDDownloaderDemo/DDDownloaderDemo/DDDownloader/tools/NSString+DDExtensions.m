@@ -10,7 +10,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 
 @implementation NSString (DDExtensions)
-- (NSString *)md5 {
+- (NSString *)DD_md5 {
     const char* str = [self UTF8String];
     unsigned char result[16];
     CC_MD5(str, (CC_LONG)strlen(str), result);

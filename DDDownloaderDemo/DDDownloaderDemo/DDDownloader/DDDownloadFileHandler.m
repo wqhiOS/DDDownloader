@@ -37,7 +37,11 @@
 }
 
 + (NSString *)getResumeDataPathWithUrl:(NSString *)url {
-    return [NSString stringWithFormat:@"%@%@",self.resumeDataDirectory,url.md5];
+    return [NSString stringWithFormat:@"%@%@",self.resumeDataDirectory,url.DD_md5];
+}
+
++ (NSString *)getDownloadFilePathWithUrl:(NSString *)url {
+    return [NSString stringWithFormat:@"%@%@.%@",self.downloadDirectory,url.DD_md5,url.pathExtension];
 }
 
 @end

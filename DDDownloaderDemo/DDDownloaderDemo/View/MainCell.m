@@ -7,6 +7,7 @@
 //
 
 #import "MainCell.h"
+#import "DDDownloadModel.h"
 
 @interface MainCell()
 
@@ -25,6 +26,31 @@
     
     [self setupSlider];
 
+}
+
+- (void)setDownloadModel:(DDDownloadModel *)downloadModel {
+    _downloadModel = downloadModel;
+    
+    switch (downloadModel.status) {
+        case DDDownloadStatusWait:
+            self.titleLabel.text = @"wait";
+            break;
+        case DDDownloadStatusPause:
+            self.titleLabel.text = @"puase";
+            break;
+        case DDDownloadStatusDownloading:
+            self.titleLabel.text = @"downloading";
+            break;
+        case DDDownloadStatusSuccess:
+            self.titleLabel.text = @"success";
+            break;
+        case DDDownloadStatusError:
+            self.titleLabel.text = @"error";
+            break;
+        default:
+            break;
+    }
+    self.slider.value = downloadModel.progress;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -27,7 +27,25 @@
     
     [self loadData];
     [self setupUI];
-    [UIColor whiteColor];
+    
+}
+
+#pragma mark - notification
+- (void)downloadNotification:(NSNotification *)notification {
+    
+    DDDownloadModel *downloadModel = notification.userInfo[DD_NotificationModelKey];
+    
+    for (NSDictionary  *dict in self.dataArray) {
+        if ([dict[@"url"] isEqualToString:downloadModel.url]) {
+            NSInteger index = [self.dataArray indexOfObject:dict];
+            MainCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+            if (cell != nil) {
+                cell.downloadModel = downloadModel;
+            }
+            break;
+        }
+    }
+    
 }
 
 #pragma mark - priate
@@ -62,12 +80,16 @@
 //    __weak typeof(self) weakSelf = self;
     cell.clickStatusButton = ^(UIButton * _Nonnull statusButton) {
         //start or pause
-        
-        if ([DDDownloadManager.sharedManager isDownloadingWithUrl:sourceDict[@"url"]]) {
+        NSString *url = sourceDict[@"url"];
+        if ([DDDownloadManager.sharedManager isDownloadingWithUrl:url]) {
             //cancel operation
-            DDDownloadManager.sharedManager suspend:<#(nonnull DDDownloadModel *)#>
+            [DDDownloadManager.sharedManager suspendWithUrl:url];
         }else {
             //to download operation
+            DDDownloadModel *downloadModel = [[DDDownloadModel alloc]init];
+            downloadModel.url = url;
+            [DDDownloadManager.sharedManager download:downloadModel];
+            [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(downloadNotification:) name:url.DD_md5 object:nil];
         }
     };
     return cell;

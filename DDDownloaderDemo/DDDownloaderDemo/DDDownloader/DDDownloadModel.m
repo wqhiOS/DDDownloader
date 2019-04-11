@@ -7,7 +7,7 @@
 //
 
 #import "DDDownloadModel.h"
-
+#import "DDDownloadFileHandler.h"
 
 @implementation DDDownloadModel
 
@@ -20,6 +20,10 @@
 
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key{
     
+}
+
+- (NSString *)localpath {
+    return [DDDownloadFileHandler getDownloadFilePathWithUrl:self.url];
 }
 
 @end

@@ -9,9 +9,16 @@
 #import <Foundation/Foundation.h>
 @class DDDownloadModel;
 
+#define DD_NotificationModelKey @"DD_NotificationModelKey"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DDDownloadManager : NSObject
+
+/**
+ The maximum number of simultaneous downloads， default is 3
+ */
+@property (nonatomic, assign) NSInteger maximumDownloading;
 
 +(instancetype)sharedManager;
 

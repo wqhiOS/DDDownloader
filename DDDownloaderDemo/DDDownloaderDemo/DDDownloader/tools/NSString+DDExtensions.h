@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (DDExtensions)
-- (NSString *)md5;
+- (NSString *)DD_md5;
 @end
 
 NS_ASSUME_NONNULL_END

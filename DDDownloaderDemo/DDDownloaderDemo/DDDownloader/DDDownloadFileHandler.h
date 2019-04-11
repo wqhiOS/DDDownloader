@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)createDownloadDirectory;
 
 + (NSString *)getResumeDataPathWithUrl:(NSString *)url;
++ (NSString *)getDownloadFilePathWithUrl:(NSString *)ur;
 
 @end
 
