@@ -146,9 +146,14 @@ static DDDownloadManager *_instance;
     return [NSData dataWithContentsOfFile:resumeDataPath];
 }
 - (BOOL)setResumeDataWithUrl:(NSString *)url resumeData:(NSData *)resumeData {
-    [DDDownloadFileHandler createResumeDataDirectory];
-    NSString *resumeDataPath = [DDDownloadFileHandler getResumeDataPathWithUrl:url];
-    return [resumeData writeToFile:resumeDataPath atomically:YES];
+    if (resumeData != nil) {
+        [DDDownloadFileHandler createResumeDataDirectory];
+        NSString *resumeDataPath = [DDDownloadFileHandler getResumeDataPathWithUrl:url];
+        return [resumeData writeToFile:resumeDataPath atomically:YES];
+    }else {
+        return [NSFileManager.defaultManager removeItemAtPath:[DDDownloadFileHandler getResumeDataPathWithUrl:url] error:nil];
+    }
+    
 }
 
 #pragma mark - NSURLSessionDelegate
@@ -217,18 +222,28 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
-    NSLog(@"###### error");
-    NSLog(@"%@",error);
-    NSLog(@"errorCode: %ld",error.code);
-    NSLog(@"%@",error.description);
     
-    if (error.code == 2) {
+    
+    if (error) {
         
-        //Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"
-        //The wrong resumeData was used
-        //e.g ResumeData was not deleted after the download was successful,So in the next download use this previous resumeData
+        NSLog(@"###### error");
+        NSLog(@"%@",error);
+        NSLog(@"errorCode: %ld",error.code);
+        NSLog(@"%@",error.description);
         
+        if (error.code == 2) {
+            
+            //Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"
+            //The wrong resumeData was used
+            //e.g ResumeData was not deleted after the download was successful,So in the next download use this previous resumeData
+            [self setResumeDataWithUrl:task.currentRequest.URL.absoluteString resumeData:nil];
+            NSAssert(YES, @"errorCode = 2");
+        }else {
+            NSLog(@"%@",error);
+        }
     }
+    
+    
 }
 
 

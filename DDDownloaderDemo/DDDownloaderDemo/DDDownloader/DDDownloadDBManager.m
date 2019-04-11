@@ -62,10 +62,10 @@ static DDDownloadDBManager *_instance;
             // 9 col
             NSString *createDownloadsTableSql = [NSString stringWithFormat:@"create table if not exists %@ (\
                                                  %@ text primary key,\
-                                                 %@ text,\
                                                  %@ integer,\
                                                  %@ text,\
                                                  %@ float,\
+                                                 %@ text,\
                                                  %@ text,\
                                                  %@ text,\
                                                  %@ text,\
@@ -78,6 +78,8 @@ static DDDownloadDBManager *_instance;
             }
             [self.database close];
         }
+    }else {
+        self.database = [[FMDatabase alloc] initWithPath:DDDownloadFileHandler.databaseFilePath];
     }
     
     return created;
@@ -105,9 +107,9 @@ static DDDownloadDBManager *_instance;
     }
 
     NSString *url = downoadModel.url ? : @"";
-    NSNumber *status = [NSNumber numberWithInteger:downoadModel.status];
+    NSNumber *status = [NSNumber numberWithInteger:downoadModel.status] ? : @(0);
     NSString *localpath = downoadModel.localpath ? : @"";
-    NSNumber *progress = [NSNumber numberWithFloat:downoadModel.progress];
+    NSNumber *progress = [NSNumber numberWithFloat:downoadModel.progress] ? : @(0);
     NSString *userId = downoadModel.userId ? : @"";
     NSString *type = downoadModel.type ? : @"";
     NSString *category = downoadModel.category ? : @"";
