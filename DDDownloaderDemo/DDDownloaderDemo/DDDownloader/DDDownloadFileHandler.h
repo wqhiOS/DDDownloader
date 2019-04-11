@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(class, nonatomic, readonly) NSString *resumeDataDirectory;
 @property(class, nonatomic, readonly) NSString *downloadDirectory;
+@property(class, nonatomic, readonly) NSString *databaseFilePath;
 
 + (void)createResumeDataDirectory;
 + (void)createDownloadDirectory;

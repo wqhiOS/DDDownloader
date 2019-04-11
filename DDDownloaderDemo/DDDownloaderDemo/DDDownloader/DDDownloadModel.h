@@ -15,13 +15,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DDDownloadModel : NSObject
 
-@property (nonatomic, assign) DDDownloadStatus status;
+@property (nonatomic, copy) NSString *url;
 
-@property (nonatomic, copy) NSString *downloadUrl;
+@property (nonatomic, assign) DDDownloadStatus status;
 
 @property (nonatomic, copy) NSString *localpath;
 
 @property (nonatomic, assign) CGFloat progress;
+
+/**
+ The following four parameters are used by the user according to the business logic
+ */
+@property (nonatomic, copy) NSString *customId;
+@property (nonatomic, copy) NSString *userId;
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *category;
+@property (nonatomic, copy) NSString *extra;
 
 
 @end

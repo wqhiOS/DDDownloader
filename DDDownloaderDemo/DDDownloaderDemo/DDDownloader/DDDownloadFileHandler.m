@@ -9,15 +9,22 @@
 #import "DDDownloadFileHandler.h"
 #import "NSString+DDExtensions.h"
 
+
 @implementation DDDownloadFileHandler
 
+#pragma mark - static property
 + (NSString *)resumeDataDirectory {
     return [NSString stringWithFormat:@"%@/resumeData/",NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)];
 }
+
 + (NSString *)downloadDirectory {
     return [NSString stringWithFormat:@"%@/DDDownloads/",NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES)];
 }
++ (NSString *)databaseFilePath {
+    return [NSString stringWithFormat:@"%@/DDDownloader.sqlite",NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)];
+}
 
+#pragma mark - static methpd
 + (void)createResumeDataDirectory {
     if (![[NSFileManager defaultManager] fileExistsAtPath:self.resumeDataDirectory]) {
         [[NSFileManager defaultManager] createDirectoryAtPath:self.resumeDataDirectory withIntermediateDirectories:NO attributes:nil error:nil];

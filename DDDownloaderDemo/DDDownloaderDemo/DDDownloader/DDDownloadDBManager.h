@@ -7,10 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+@class DDDownloadModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DDDownloadDBManager : NSObject
+
++(instancetype)sharedManager;
+
+- (BOOL)insertDownloadModel:(DDDownloadModel *)downoadModel;
+
+- (void)queryDownloadModelsComplete:(void(^)(NSMutableArray<DDDownloadModel*> *))complete;
+
+- (BOOL)deleteDownloadModels: (NSMutableArray<DDDownloadModel*>*)downloadModels;
+
 
 @end
 

@@ -8,6 +8,8 @@
 
 #import "DDDownloadManager.h"
 #import "DDDownloadFileHandler.h"
+#import "DDDownloadModel.h"
+#import "DDDownloadDBManager.h"
 
 @interface DDDownloadManager()<NSURLSessionDelegate>
 
@@ -45,28 +47,41 @@ static DDDownloadManager *_instance;
 }
 
 #pragma mark - public method
-- (void)downloadWithUrl:(NSString*)url {
+- (void)download:(DDDownloadModel *)downloadModel {
     
-    if (url.length <= 0) {
+    //validate url
+    if (downloadModel.url.length < 0) {
         return;
     }
     
-    NSData *resumeData = [self getResumeDataWithUrl:url];
+    // is downloading
+    if (downloadModel.status == DDDownloadStatusDownloading) {
+        return;
+    }
+    
+    
+    NSData *resumeData = [self getResumeDataWithUrl:downloadModel.url];
     NSURLSessionDownloadTask *downloadTask;
     if (resumeData) {
         downloadTask = [self.session downloadTaskWithResumeData:resumeData];
     }else {
-        downloadTask = [self.session downloadTaskWithURL:[NSURL URLWithString:url]];
+        downloadTask = [self.session downloadTaskWithURL:[NSURL URLWithString:downloadModel.url]];
     }
-    self.downloadTasks[url] = downloadTask;
+    self.downloadTasks[downloadModel.url] = downloadTask;
     [downloadTask resume];
+    
+    downloadModel.status = DDDownloadStatusDownloading;
+    
+    //save DDDownloadModel
+    [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+
 }
 
-- (void)suspendWithUrl:(NSString *)url {
-    NSURLSessionDownloadTask *downloadTask = self.downloadTasks[url];
+- (void)suspend:(DDDownloadModel *)downloadModel {
+    NSURLSessionDownloadTask *downloadTask = self.downloadTasks[downloadModel.url];
     [downloadTask cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
         if (resumeData) {
-            if ([self setResumeDataWithUrl:url resumeData:resumeData]) {
+            if ([self setResumeDataWithUrl:downloadModel.url resumeData:resumeData]) {
                 NSAssert(YES, @"resumeData write fail");
             }
         }else {
@@ -74,7 +89,8 @@ static DDDownloadManager *_instance;
         }
     }];
 }
-- (void)deleteWithUrl:(NSString *)url {
+
+- (void)delete:(DDDownloadModel *)downloadModel {
     
 }
 
