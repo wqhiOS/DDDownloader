@@ -107,9 +107,8 @@ static DDDownloadDBManager *_instance;
     NSLog(@"%@",insertDownloadSql);
     
     [self.databaseQueue inDatabase:^(FMDatabase * _Nonnull db) {
-        [db open];
+        NSLog(@"%%progress:%@",progress);
         [db executeUpdate:insertDownloadSql withArgumentsInArray:@[url,status,localpath,progress,userId,type,category,customId,extra]];
-        [db close];
     }];
     
     return YES;
@@ -126,6 +125,7 @@ static DDDownloadDBManager *_instance;
             DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
             [downloadModel setValuesForKeysWithDictionary:resultSet.resultDictionary];
             download = downloadModel;
+            [resultSet close];
         }
     }];
     return download;

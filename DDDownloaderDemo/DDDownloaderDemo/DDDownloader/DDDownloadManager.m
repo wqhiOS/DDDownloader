@@ -71,11 +71,16 @@ static DDDownloadManager *_instance;
         return;
     }
     // is completed
-    if ([DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:downloadModel.url].status == DDDownloadStatusSuccess) {
+    DDDownloadModel *pastDownloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:downloadModel.url];
+    if (downloadModel.status == DDDownloadStatusSuccess) {
         return;
     }
-    
+
     // It's time to download
+    if (pastDownloadModel != nil) {
+        downloadModel = pastDownloadModel;
+    }
+    
     NSData *resumeData = [self getResumeDataWithUrl:downloadModel.url];
     NSURLSessionDownloadTask *downloadTask;
     if (resumeData) {
@@ -97,25 +102,31 @@ static DDDownloadManager *_instance;
     NSURLSessionDownloadTask *downloadTask = self.downloadTasks[url];
     
 
-    CGFloat progress = (downloadTask.countOfBytesReceived*1.0) / (downloadTask.countOfBytesExpectedToReceive*1.0);
+   
     [downloadTask cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
-        if (resumeData) {
-            if ([self setResumeDataWithUrl:url resumeData:resumeData]) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (resumeData) {
                 
-                DDDownloadModel *downloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url];
-                downloadModel.status = DDDownloadStatusPause;
-                if (progress > 0) {
-                    downloadModel.progress = progress;
+                CGFloat progress = (downloadTask.countOfBytesReceived*1.0) / (downloadTask.countOfBytesExpectedToReceive*1.0);
+                
+                if ([self setResumeDataWithUrl:url resumeData:resumeData]) {
+                    
+                    DDDownloadModel *downloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url];
+                    downloadModel.status = DDDownloadStatusPause;
+                    if (progress > 0) {
+                        downloadModel.progress = progress;
+                    }
+                    [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+                    [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+                    
+                }else {
+                    NSAssert(YES, @"resumeData write fail");
                 }
-                [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
-                [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
-              
             }else {
-                NSAssert(YES, @"resumeData write fail");
+                NSAssert(resumeData == nil, @"resumeData == nil");
             }
-        }else {
-            NSAssert(resumeData == nil, @"resumeData == nil");
-        }
+        });
+        
     }];
 }
 - (void)deleteWithUrls:(NSMutableArray<NSString *> *)urls {
@@ -188,8 +199,11 @@ didFinishDownloadingToURL:(NSURL *)location {
     }else {
         DDDownloadModel *downloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url];
         downloadModel.status = DDDownloadStatusSuccess;
+        downloadModel.progress = 1;
+        [self setResumeDataWithUrl:downloadModel.url resumeData:nil];
         [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
         [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+        
     }
 
 }
