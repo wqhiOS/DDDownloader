@@ -11,7 +11,6 @@
 
 #define DD_NotificationModelKey @"DD_NotificationModelKey"
 
-NS_ASSUME_NONNULL_BEGIN
 
 @interface DDDownloadManager : NSObject
 
@@ -19,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  The maximum number of simultaneous downloads， default is 3
  */
 @property (nonatomic, assign) NSInteger maximumDownloading;
+@property (nonatomic, copy) void(^backgroundHandler)(void);
 
 +(instancetype)sharedManager;
 
@@ -31,4 +31,3 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-NS_ASSUME_NONNULL_END

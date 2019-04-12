@@ -26,11 +26,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [DDDownloadManager sharedManager];
+    
     [self loadData];
     [self setupUI];
     
-    [self queryDownloadModels];
     
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self queryDownloadModels];
 }
 
 #pragma mark - notification
@@ -66,7 +73,13 @@
 - (void)queryDownloadModels {
     NSArray *downloadModelArray = [DDDownloadDBManager.sharedManager queryDownloadModels];
     self.downloadModelArrayDict = @{}.mutableCopy;
+    
+    if (downloadModelArray.count == 0) {
+        return;
+    }
+    
     for (DDDownloadModel *downloadModel in downloadModelArray) {
+        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(downloadNotification:) name:downloadModel.url.DD_md5 object:nil];
         self.downloadModelArrayDict[downloadModel.url] = downloadModel;
     }
     [self.tableView reloadData];

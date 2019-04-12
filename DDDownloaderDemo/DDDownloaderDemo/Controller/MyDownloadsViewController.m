@@ -9,8 +9,8 @@
 #import "MyDownloadsViewController.h"
 #import "DownloadCell.h"
 #import "DDDownloader.h"
-
-@interface MyDownloadsViewController ()<UITableViewDataSource>
+#import <AVKit/AVKit.h>
+@interface MyDownloadsViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *downloadArray;
@@ -34,6 +34,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self loadData];
+}
+
+- (void)loadData {
     self.downloadArray = [DDDownloadDBManager.sharedManager queryDownloadModels];
     for (DDDownloadModel *downloadModel in self.downloadArray) {
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(downloadNotification:) name:downloadModel.url.DD_md5 object:nil];
@@ -49,10 +53,11 @@
         DDDownloadModel *downloadModel = self.downloadArray[i];
         if ([downloadModel.url isEqualToString:nf_downloadModel.url]) {
             NSInteger index = [self.downloadArray indexOfObject:downloadModel];
-            downloadModel = nf_downloadModel;
+            downloadModel.progress = nf_downloadModel.progress;
+            downloadModel.status = nf_downloadModel.status;
             dispatch_async(dispatch_get_main_queue(), ^{
                 DownloadCell* cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-                cell.downloadModel = nf_downloadModel;
+                cell.downloadModel = downloadModel;
             });
             break;
         }
@@ -65,7 +70,7 @@
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.dataSource = self;
-//        _tableView.delegate = self;
+        _tableView.delegate = self;
         _tableView.rowHeight = 60;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_tableView registerNib:[UINib nibWithNibName:NSStringFromClass([DownloadCell class]) bundle:NSBundle.mainBundle] forCellReuseIdentifier:NSStringFromClass([DownloadCell class])];
@@ -79,8 +84,31 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DownloadCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(DownloadCell.class) forIndexPath:indexPath];
-    cell.downloadModel = self.downloadArray[indexPath.row];
+    DDDownloadModel *downloadModel = self.downloadArray[indexPath.row];
+    cell.downloadModel = downloadModel;
+    
+    __weak typeof(self) weakSelf = self;
+    cell.clickPlayButton = ^(UIButton * _Nonnull button) {
+        AVPlayerViewController *playerVc = [[AVPlayerViewController alloc] init];
+        AVPlayer *player = [AVPlayer playerWithURL:[NSURL fileURLWithPath:downloadModel.localpath]];
+        playerVc.player = player;
+        [playerVc.player play];
+        [weakSelf presentViewController:playerVc animated:YES completion:nil];
+    };
     return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewCellEditingStyleDelete;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    DDDownloadModel *downloadModel = self.downloadArray[indexPath.row];
+    [NSNotificationCenter.defaultCenter removeObserver:self name:downloadModel.url.DD_md5 object:nil];
+    [DDDownloadDBManager.sharedManager deleteDownloadModelsWithUrls:@[downloadModel.url]];
+    [self loadData];
 }
 
 @end

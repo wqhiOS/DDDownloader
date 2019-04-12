@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) DDDownloadModel *downloadModel;
 
+@property (nonatomic, copy) void(^clickPlayButton)(UIButton*);
+
 @end
 
 NS_ASSUME_NONNULL_END

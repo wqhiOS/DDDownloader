@@ -70,5 +70,8 @@
     [_slider setThumbImage:img forState:UIControlStateNormal];
 }
 
+- (IBAction)playButtonClick:(UIButton *)sender {
+    self.clickPlayButton(sender);
+}
 
 @end

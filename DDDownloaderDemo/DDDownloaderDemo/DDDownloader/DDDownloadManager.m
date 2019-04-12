@@ -46,10 +46,25 @@ static DDDownloadManager *_instance;
         self.downloadTasks = [[NSMutableDictionary alloc]init];
         self.downloadingTasks = [NSMutableArray array];
         
-        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-//        config.timeoutIntervalForRequest = 10;
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"DDDownloader"];
+        config.timeoutIntervalForRequest = 10;
 //        config.sessionSendsLaunchEvents = YES;
+//        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+        
+        NSArray *sessionDownloadTask = [self sessionDownloadTasks];
+        for (NSURLSessionDownloadTask *downloadTask in sessionDownloadTask) {
+            NSString *url = downloadTask.currentRequest.URL.absoluteString;
+            DDDownloadModel *downloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url];
+            [downloadTask cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+                [resumeData writeToFile:[DDDownloadFileHandler getResumeDataPathWithUrl:url] atomically:YES];
+                CGFloat progress = (downloadTask.countOfBytesReceived*1.0) / (downloadTask.countOfBytesExpectedToReceive*1.0);
+                downloadModel.status = DDDownloadStatusPause;
+                downloadModel.progress = progress;
+                [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+            }];
+        }
+
         
         [DDDownloadFileHandler createResumeDataDirectory];
         [DDDownloadFileHandler createDownloadDirectory];
@@ -136,6 +151,7 @@ static DDDownloadManager *_instance;
     for (NSString *url in urls) {
         NSURLSessionDownloadTask *downloadTask = self.downloadTasks[url];
         [downloadTask cancel];
+        [self setResumeDataWithUrl:url resumeData:nil];
     }
     
     // delete downloadModels
@@ -171,10 +187,31 @@ static DDDownloadManager *_instance;
     }
     
 }
+#pragma mark downloadTask
+- (NSArray<NSURLSessionDownloadTask*> *)sessionDownloadTasks
+{
+    __block NSArray *tasks = nil;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);//使用信号量把异步变同步，是这个函数返回时tasks有值
+    [self.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        NSLog(@"%@",downloadTasks);
+        tasks = downloadTasks;
+        if (tasks.count > 0) {
+            NSURLSessionDownloadTask *task = tasks[0];
+            NSLog(@"aa");
+        }
+        dispatch_semaphore_signal(semaphore);
+    }];
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    return tasks;
+}
 
 #pragma mark - NSURLSessionDelegate
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
     NSLog(@"###### didFinishEventsForBackgroundURLSession");
+    if (self.backgroundHandler) {
+        self.backgroundHandler();
+        self.backgroundHandler = nil;
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
