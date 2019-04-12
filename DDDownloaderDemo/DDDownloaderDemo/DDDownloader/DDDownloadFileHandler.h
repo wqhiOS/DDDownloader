@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSString *)getResumeDataPathWithUrl:(NSString *)url;
 + (NSString *)getDownloadFilePathWithUrl:(NSString *)ur;
 
++ (BOOL)downlaodFileIsExist:(NSString *)url;
+
 @end
 
 NS_ASSUME_NONNULL_END

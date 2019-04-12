@@ -131,7 +131,7 @@ static DDDownloadDBManager *_instance;
     return download;
 }
 
-- (NSArray<DDDownloadModel *> *)queryDownloadModels {
+- (NSMutableArray<DDDownloadModel *> *)queryDownloadModels {
     NSMutableArray <DDDownloadModel *>*downloadModels = [NSMutableArray array];
     
     NSString *queryDownloadsSql = [NSString stringWithFormat:@"select * from %@",table_name];

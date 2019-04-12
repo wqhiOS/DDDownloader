@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *dataArray;
+@property (nonatomic, strong) NSMutableDictionary<NSString *,DDDownloadModel*>*downloadModelArrayDict;
 
 @end
 
@@ -28,13 +29,13 @@
     [self loadData];
     [self setupUI];
     
+    [self queryDownloadModels];
+    
 }
 
 #pragma mark - notification
 - (void)downloadNotification:(NSNotification *)notification {
-    
-    
-    
+
     DDDownloadModel *downloadModel = notification.userInfo[DD_NotificationModelKey];
     
     for (NSDictionary  *dict in self.dataArray) {
@@ -49,6 +50,7 @@
             break;
         }
     }
+    self.downloadModelArrayDict[downloadModel.url] = downloadModel;
     
 }
 
@@ -61,6 +63,15 @@
     self.dataArray = [[NSMutableArray alloc] initWithContentsOfFile:plistPath];
 }
 
+- (void)queryDownloadModels {
+    NSArray *downloadModelArray = [DDDownloadDBManager.sharedManager queryDownloadModels];
+    self.downloadModelArrayDict = @{}.mutableCopy;
+    for (DDDownloadModel *downloadModel in downloadModelArray) {
+        self.downloadModelArrayDict[downloadModel.url] = downloadModel;
+    }
+    [self.tableView reloadData];
+}
+
 - (void)setupUI {
     self.view.backgroundColor = UIColor.whiteColor;
     self.title = @"DDDownloader";
@@ -71,6 +82,8 @@
     
     [self.view addSubview:self.tableView];
 }
+
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.dataArray.count;
@@ -80,6 +93,10 @@
     MainCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass(MainCell.class) forIndexPath:indexPath];
     NSDictionary *sourceDict = self.dataArray[indexPath.row];
     cell.sourceDict = sourceDict;
+    
+    DDDownloadModel *downloadModel = self.downloadModelArrayDict[sourceDict[@"url"]];
+    NSLog(@"%@",downloadModel);
+    cell.downloadModel = downloadModel;
     
 //    __weak typeof(self) weakSelf = self;
     cell.clickStatusButton = ^(UIButton * _Nonnull statusButton) {
@@ -92,8 +109,10 @@
             //to download operation
             DDDownloadModel *downloadModel = [[DDDownloadModel alloc]init];
             downloadModel.url = url;
-            [DDDownloadManager.sharedManager download:downloadModel];
+            downloadModel.extra = sourceDict[@"title"];
             [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(downloadNotification:) name:url.DD_md5 object:nil];
+            [DDDownloadManager.sharedManager download:downloadModel];
+            
         }
     };
     return cell;

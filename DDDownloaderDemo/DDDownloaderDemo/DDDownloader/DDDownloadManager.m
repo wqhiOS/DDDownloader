@@ -72,7 +72,8 @@ static DDDownloadManager *_instance;
     }
     // is completed
     DDDownloadModel *pastDownloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:downloadModel.url];
-    if (downloadModel.status == DDDownloadStatusSuccess) {
+    if (pastDownloadModel.status == DDDownloadStatusSuccess && [DDDownloadFileHandler downlaodFileIsExist:pastDownloadModel.url]) {
+        [NSNotificationCenter.defaultCenter postNotificationName:pastDownloadModel.url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:pastDownloadModel}];
         return;
     }
 

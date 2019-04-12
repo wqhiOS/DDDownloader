@@ -39,7 +39,10 @@
                         </connections>
                     </button>
                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vSK-Ca-QTv">
-                        <rect key="frame" x="-2" y="29.5" width="324" height="31"/>
+                        <rect key="frame" x="-2" y="56.5" width="324" height="4"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="3" id="md0-no-tKe"/>
+                        </constraints>
                         <color key="minimumTrackTintColor" red="0.98039215690000003" green="0.40784313729999999" blue="0.33725490200000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </slider>
                 </subviews>

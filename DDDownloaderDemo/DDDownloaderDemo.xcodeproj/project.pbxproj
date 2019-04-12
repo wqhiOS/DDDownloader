@@ -10,6 +10,8 @@
 		477110BC522A0945E7C751F6 /* libPods-DDDownloaderDemoUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F6BE113A7CE1E17AC535C8F /* libPods-DDDownloaderDemoUITests.a */; };
 		518E429B6B4ACDA9FF1955E5 /* libPods-DDDownloaderDemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BAD0B172BE49335FA75FD87 /* libPods-DDDownloaderDemoTests.a */; };
 		B583F9D89F7C7034AD1D8E1F /* libPods-DDDownloaderDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6C7E9EB7F9A16CC5159113 /* libPods-DDDownloaderDemo.a */; };
+		E395EA362260616800D86267 /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E395EA342260616800D86267 /* DownloadCell.m */; };
+		E395EA372260616800D86267 /* DownloadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E395EA352260616800D86267 /* DownloadCell.xib */; };
 		E3DCEE4B225DD078006D1E72 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E3DCEE4A225DD078006D1E72 /* AppDelegate.m */; };
 		E3DCEE53225DD078006D1E72 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3DCEE52225DD078006D1E72 /* Assets.xcassets */; };
 		E3DCEE56225DD078006D1E72 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3DCEE54225DD078006D1E72 /* LaunchScreen.storyboard */; };
@@ -56,6 +58,9 @@
 		73310E14C539F02DDD4B3DA9 /* Pods-DDDownloaderDemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDDownloaderDemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DDDownloaderDemoUITests/Pods-DDDownloaderDemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A3AEB4011C478B1714A62D8C /* Pods-DDDownloaderDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDDownloaderDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DDDownloaderDemo/Pods-DDDownloaderDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		A7C35F65CB466C2E0BB6AFBB /* Pods-DDDownloaderDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDDownloaderDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-DDDownloaderDemo/Pods-DDDownloaderDemo.release.xcconfig"; sourceTree = "<group>"; };
+		E395EA332260616800D86267 /* DownloadCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadCell.h; sourceTree = "<group>"; };
+		E395EA342260616800D86267 /* DownloadCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadCell.m; sourceTree = "<group>"; };
+		E395EA352260616800D86267 /* DownloadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DownloadCell.xib; sourceTree = "<group>"; };
 		E3DCEE46225DD078006D1E72 /* DDDownloaderDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDDownloaderDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3DCEE49225DD078006D1E72 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E3DCEE4A225DD078006D1E72 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -246,6 +251,9 @@
 				E3EF99C0225DDB5700F412A6 /* MainCell.h */,
 				E3EF99C1225DDB5700F412A6 /* MainCell.m */,
 				E3EF99C2225DDB5700F412A6 /* MainCell.xib */,
+				E395EA332260616800D86267 /* DownloadCell.h */,
+				E395EA342260616800D86267 /* DownloadCell.m */,
+				E395EA352260616800D86267 /* DownloadCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -367,6 +375,7 @@
 			files = (
 				E3EF99B6225DD5AC00F412A6 /* downloadSource.plist in Resources */,
 				E3DCEE56225DD078006D1E72 /* LaunchScreen.storyboard in Resources */,
+				E395EA372260616800D86267 /* DownloadCell.xib in Resources */,
 				E3EF99C4225DDB5700F412A6 /* MainCell.xib in Resources */,
 				E3DCEE53225DD078006D1E72 /* Assets.xcassets in Resources */,
 			);
@@ -467,6 +476,7 @@
 				E3DCEE59225DD078006D1E72 /* main.m in Sources */,
 				E3EF99CB225DED3E00F412A6 /* DDDownloadFileHandler.m in Sources */,
 				E3DCEE7F225DD0D8006D1E72 /* MainViewController.m in Sources */,
+				E395EA362260616800D86267 /* DownloadCell.m in Sources */,
 				E3EF99D3225DEDDA00F412A6 /* DDDownloadManager.m in Sources */,
 				E3EF99B3225DD38F00F412A6 /* MyDownloadsViewController.m in Sources */,
 				E3EF99D1225DED6700F412A6 /* DDDownloadModel.m in Sources */,

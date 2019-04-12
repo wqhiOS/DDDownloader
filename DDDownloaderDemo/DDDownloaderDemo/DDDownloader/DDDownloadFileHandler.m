@@ -44,4 +44,7 @@
     return [NSString stringWithFormat:@"%@%@.%@",self.downloadDirectory,url.DD_md5,url.pathExtension];
 }
 
++ (BOOL)downlaodFileIsExist:(NSString *)url {
+    return  [NSFileManager.defaultManager fileExistsAtPath:[self getDownloadFilePathWithUrl:url]];
+}
 @end
