@@ -21,6 +21,9 @@
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key{
     
 }
+- (void)setNilValueForKey:(NSString *)key {
+    
+}
 
 - (NSString *)localpath {
     return [DDDownloadFileHandler getDownloadFilePathWithUrl:self.url];

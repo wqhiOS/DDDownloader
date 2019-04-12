@@ -27,7 +27,7 @@ const NSString *key_extra = @"extra";
 
 @interface DDDownloadDBManager()
 
-@property (nonatomic, strong) FMDatabase *database;
+@property (nonatomic, strong) FMDatabaseQueue *databaseQueue;
 
 @end
 
@@ -53,55 +53,41 @@ static DDDownloadDBManager *_instance;
 
 - (BOOL)createDatabase {
     
-    BOOL created = YES;
+    __block BOOL created = YES;
     if (![NSFileManager.defaultManager fileExistsAtPath:DDDownloadFileHandler.databaseFilePath]) {
         
-        self.database = [[FMDatabase alloc] initWithPath:DDDownloadFileHandler.databaseFilePath];
+        self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:DDDownloadFileHandler.databaseFilePath];
         
-        if ([self.database open]) {
-            // 9 col
+        [self.databaseQueue inDatabase:^(FMDatabase * _Nonnull db) {
             NSString *createDownloadsTableSql = [NSString stringWithFormat:@"create table if not exists %@ (\
                                                  %@ text primary key,\
                                                  %@ integer,\
                                                  %@ text,\
-                                                 %@ float,\
+                                                 %@ real,\
                                                  %@ text,\
                                                  %@ text,\
                                                  %@ text,\
                                                  %@ text,\
                                                  %@ text)"
-            ,table_name,key_url,key_status,key_localpath,key_progress,key_userId,key_type,key_category,key_customId,key_extra];
-            
-            created = [self.database executeUpdate:createDownloadsTableSql];
+                                                 ,table_name,key_url,key_status,key_localpath,key_progress,key_userId,key_type,key_category,key_customId,key_extra];
+            created = [db executeUpdate:createDownloadsTableSql];
             if (created == NO) {
-                NSLog(@"%@",self.database.lastError);
+                NSLog(@"%@",db.lastError);
             }
-            [self.database close];
-        }
+            
+        }];
     }else {
-        self.database = [[FMDatabase alloc] initWithPath:DDDownloadFileHandler.databaseFilePath];
+        self.databaseQueue = [FMDatabaseQueue databaseQueueWithPath:DDDownloadFileHandler.databaseFilePath];
     }
     
     return created;
 }
 
-- (BOOL)openDatabase {
-    if (self.database == nil) {
-        [self createDatabase];
-    }
-    
-    if (self.database) {
-        return [self.database open];
-    }else {
-        return NO;
-    }
-}
-
 - (BOOL)insertDownloadModel:(DDDownloadModel *)downoadModel{
     
-    if ([self openDatabase] == NO) {
-        return NO;
-    }
+    NSLog(@"开始写入");
+    NSLog(@"%lf",downoadModel.progress);
+    
     if (downoadModel.url.length <= 0) {
         return NO;
     }
@@ -119,64 +105,57 @@ static DDDownloadDBManager *_instance;
     
     NSString *insertDownloadSql = [NSString stringWithFormat:@"insert or replace into %@ (%@,%@,%@,%@,%@,%@,%@,%@,%@) values (?,?,?,?,?,?,?,?,?)",table_name,key_url,key_status,key_localpath,key_progress,key_userId,key_type,key_category,key_customId,key_extra];
     NSLog(@"%@",insertDownloadSql);
-    [self.database executeUpdate:insertDownloadSql withArgumentsInArray:@[url,status,localpath,progress,userId,type,category,customId,extra]];
-    [self.database close];
+    
+    [self.databaseQueue inDatabase:^(FMDatabase * _Nonnull db) {
+        [db open];
+        [db executeUpdate:insertDownloadSql withArgumentsInArray:@[url,status,localpath,progress,userId,type,category,customId,extra]];
+        [db close];
+    }];
     
     return YES;
     
 }
 
-- (void)queryDownloadModelsComplete:(void(^)(NSMutableArray<DDDownloadModel*> *))complete {
+- (DDDownloadModel *)queryDownloadModelWithUrl:(NSString *)url {
+    NSString *queryDonwloadModelSql = [NSString stringWithFormat:@"select * from %@ where %@ = '%@'",table_name,key_url,url];
+    __block DDDownloadModel *download;
+    [self.databaseQueue inDatabase:^(FMDatabase * _Nonnull db) {
+        FMResultSet *resultSet = [db executeQuery:queryDonwloadModelSql];
+        if (resultSet.next) {
+            NSLog(@"查询成功");
+            DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
+            [downloadModel setValuesForKeysWithDictionary:resultSet.resultDictionary];
+            download = downloadModel;
+        }
+    }];
+    return download;
+}
+
+- (NSArray<DDDownloadModel *> *)queryDownloadModels {
     NSMutableArray <DDDownloadModel *>*downloadModels = [NSMutableArray array];
     
-    if ([self openDatabase] == NO) {
-        complete(downloadModels);
-        return;
-    }
-    
     NSString *queryDownloadsSql = [NSString stringWithFormat:@"select * from %@",table_name];
-    FMResultSet *resultSet = [self.database executeQuery:queryDownloadsSql];
-    
-    while (resultSet.next) {
-        DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
-        [downloadModel setValuesForKeysWithDictionary:resultSet.resultDictionary];
-        [downloadModels addObject:downloadModel];
-    }
-    
-    complete(downloadModels);
-    
-    [self.database close];
+    [self.databaseQueue inDatabase:^(FMDatabase * _Nonnull db) {
+        
+        FMResultSet *resultSet = [db executeQuery:queryDownloadsSql];
+        
+        while (resultSet.next) {
+            DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
+            [downloadModel setValuesForKeysWithDictionary:resultSet.resultDictionary];
+            [downloadModels addObject:downloadModel];
+        }
+    }];
+    return downloadModels;
 }
-
-- (void)queryDownloadModelWithUrl:(NSString *)url complete:(void (^)(DDDownloadModel * _Nullable))complete {
-    if ([self openDatabase] == NO) {
-        complete(nil);
-        return;
-    }
-    NSString *queryDonwloadModelSql = [NSString stringWithFormat:@"select * from %@ where %@ = '%@'",table_name,key_url,url];
-    FMResultSet *resultSet = [self.database executeQuery:queryDonwloadModelSql];
-    if (resultSet.next) {
-        DDDownloadModel *downloadModel = [[DDDownloadModel alloc] init];
-        [downloadModel setValuesForKeysWithDictionary:resultSet.resultDictionary];
-        complete(downloadModel);
-    }else {
-        complete(nil);
-    }
-    
-}
-
 
 - (BOOL)deleteDownloadModelsWithUrls:(NSMutableArray<NSString *> *)urls {
     
-    if ([self openDatabase] == NO) {
-        return NO;
-    }
-    
-    for (NSString *url  in urls) {
-        NSString *deleteSql = [NSString stringWithFormat:@"delete from %@ WHERE %@ = '%@'",table_name,key_url,url];
-        [self.database executeUpdate:deleteSql];
-    }
-    [self.database close];
+    [self.databaseQueue inDatabase:^(FMDatabase * _Nonnull db) {
+        for (NSString *url  in urls) {
+            NSString *deleteSql = [NSString stringWithFormat:@"delete from %@ WHERE %@ = '%@'",table_name,key_url,url];
+            [db executeUpdate:deleteSql];
+        }
+    }];
     
     return YES;
 }

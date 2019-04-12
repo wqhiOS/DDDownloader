@@ -17,8 +17,8 @@
 
 - (BOOL)insertDownloadModel:(DDDownloadModel *)downoadModel;
 
-- (void)queryDownloadModelsComplete:(void(^)(NSMutableArray<DDDownloadModel*> *))complete;
-- (void)queryDownloadModelWithUrl:(NSString*)url complete:(void(^)(DDDownloadModel *))complete;
+- (NSArray<DDDownloadModel*>*)queryDownloadModels;
+- (DDDownloadModel *)queryDownloadModelWithUrl:(NSString *)url;
 
 - (BOOL)deleteDownloadModelsWithUrls: (NSMutableArray<NSString*>*)urls;
 

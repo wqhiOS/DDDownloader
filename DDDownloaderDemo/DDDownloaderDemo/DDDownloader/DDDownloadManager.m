@@ -46,9 +46,9 @@ static DDDownloadManager *_instance;
         self.downloadTasks = [[NSMutableDictionary alloc]init];
         self.downloadingTasks = [NSMutableArray array];
         
-        NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"com.wuqh.DDDownloader"];
-        config.timeoutIntervalForRequest = 10;
-        config.sessionSendsLaunchEvents = YES;
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+//        config.timeoutIntervalForRequest = 10;
+//        config.sessionSendsLaunchEvents = YES;
         self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
         
         [DDDownloadFileHandler createResumeDataDirectory];
@@ -71,11 +71,9 @@ static DDDownloadManager *_instance;
         return;
     }
     // is completed
-    [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:downloadModel.url complete:^(DDDownloadModel *downloadModel) {
-        if (downloadModel != nil && downloadModel.status == DDDownloadStatusSuccess) {
-            return;
-        }
-    }];
+    if ([DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:downloadModel.url].status == DDDownloadStatusSuccess) {
+        return;
+    }
     
     // It's time to download
     NSData *resumeData = [self getResumeDataWithUrl:downloadModel.url];
@@ -97,15 +95,21 @@ static DDDownloadManager *_instance;
 
 - (void)suspendWithUrl:(NSString *)url {
     NSURLSessionDownloadTask *downloadTask = self.downloadTasks[url];
+    
+
+    CGFloat progress = (downloadTask.countOfBytesReceived*1.0) / (downloadTask.countOfBytesExpectedToReceive*1.0);
     [downloadTask cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
         if (resumeData) {
             if ([self setResumeDataWithUrl:url resumeData:resumeData]) {
-                [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * _Nonnull downloadModel) {
-                    downloadModel.status = DDDownloadStatusPause;
-                    downloadModel.progress = (downloadTask.countOfBytesReceived*1.0) / (downloadTask.countOfBytesExpectedToReceive*1.0);
-                    [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
-                    [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
-                }];
+                
+                DDDownloadModel *downloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url];
+                downloadModel.status = DDDownloadStatusPause;
+                if (progress > 0) {
+                    downloadModel.progress = progress;
+                }
+                [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+                [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+              
             }else {
                 NSAssert(YES, @"resumeData write fail");
             }
@@ -176,23 +180,16 @@ didFinishDownloadingToURL:(NSURL *)location {
     
     if (error) {
         NSLog(@"%@",error);
-        [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * downloadModel) {
-            if (downloadModel) {
-                downloadModel.status = DDDownloadStatusError;
-                [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
-                [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
-                
-            }
-        }];
+        DDDownloadModel *downloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url];
+        downloadModel.status = DDDownloadStatusError;
+        [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+        [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
         
     }else {
-        [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url complete:^(DDDownloadModel * downloadModel) {
-            if (downloadModel) {
-                downloadModel.status = DDDownloadStatusSuccess;
-                [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
-                [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
-            }
-        }];
+        DDDownloadModel *downloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url];
+        downloadModel.status = DDDownloadStatusSuccess;
+        [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+        [NSNotificationCenter.defaultCenter postNotificationName:url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
     }
 
 }
@@ -225,11 +222,11 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
     
     
     if (error) {
-        
-        NSLog(@"###### error");
-        NSLog(@"%@",error);
-        NSLog(@"errorCode: %ld",error.code);
-        NSLog(@"%@",error.description);
+//        
+//        NSLog(@"###### error");
+//        NSLog(@"%@",error);
+//        NSLog(@"errorCode: %ld",error.code);
+//        NSLog(@"%@",error.description);
         
         if (error.code == 2) {
             
