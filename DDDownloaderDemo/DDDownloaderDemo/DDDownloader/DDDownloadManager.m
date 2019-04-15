@@ -295,6 +295,7 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     
+    NSString *url = task.currentRequest.URL.absoluteString;
     
     if (error) {
         
@@ -303,15 +304,25 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
         NSLog(@"errorCode: %ld",error.code);
         NSLog(@"%@",error.description);
         
-        if (error.code == 2) {
+        
+        if (error.code == -999) {
             
-            //Error Domain=NSPOSIXErrorDomain Code=2 "No such file or directory"
-            //The wrong resumeData was used
-            //e.g ResumeData was not deleted after the download was successful,So in the next download use this previous resumeData
-            [self setResumeDataWithUrl:task.currentRequest.URL.absoluteString resumeData:nil];
-            NSAssert(YES, @"errorCode = 2");
+            NSData *resumeData = error.userInfo[NSURLSessionDownloadTaskResumeData];
+            [self setResumeDataWithUrl:url resumeData:resumeData];
+            
+            CGFloat progress = (task.countOfBytesReceived*1.0) / (task.countOfBytesExpectedToReceive*1.0);
+            DDDownloadModel *downloadModel = [DDDownloadDBManager.sharedManager queryDownloadModelWithUrl:url];
+            downloadModel.status = DDDownloadStatusPause;
+            downloadModel.progress = progress;
+            
+            [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
+            
+            [NSNotificationCenter.defaultCenter postNotificationName:downloadModel.url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
+            
+        }else if (error.code == 2) {
+            
         }else {
-            NSLog(@"%@",error);
+            
         }
     }
     
