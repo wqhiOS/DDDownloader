@@ -10,19 +10,19 @@
 	</dict>
 	<dict>
 		<key>url</key>
-		<string>https://www.sample-videos.com/video123/flv/720/big_buck_bunny_720p_30mb.flv</string>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201811/82393f5ce70745bea85701ddaab447b5_512.mp4</string>
 		<key>title</key>
-		<string>30mb.flv</string>
+		<string>30mb.mp4</string>
 	</dict>
 	<dict>
 		<key>url</key>
-		<string>https://www.sample-videos.com/video123/3gp/240/big_buck_bunny_240p_30mb.3gp</string>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201811/94f5c04bd2164d4e9d77d6cb8a7de87e_512.mp4</string>
 		<key>title</key>
-		<string>30mb.3gp</string>
+		<string>3.mp4</string>
 	</dict>
 	<dict>
 		<key>url</key>
-		<string>https://www.sample-videos.com/zip/100mb.zip</string>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201811/9e2462f0a54e474e83c005d8989d52c1_512.mp4</string>
 		<key>title</key>
 		<string>100mb.zip</string>
 	</dict>
