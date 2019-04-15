@@ -56,9 +56,6 @@ static DDDownloadManager *_instance;
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"DDDownloader"];
         config.timeoutIntervalForRequest = 10;
-        config.shouldUseExtendedBackgroundIdleMode = NO;
-//        config.sessionSendsLaunchEvents = YES;
-//        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
 
         NSArray *sessionDownloadTask = [self sessionDownloadTasks];
