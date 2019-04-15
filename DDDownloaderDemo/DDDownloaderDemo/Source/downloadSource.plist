@@ -16,33 +16,9 @@
 	</dict>
 	<dict>
 		<key>url</key>
-		<string>https://media.w3.org/2010/05/sintel/trailer.mp4</string>
-		<key>title</key>
-		<string>3.mp4</string>
-	</dict>
-	<dict>
-		<key>url</key>
-		<string>https://www.sample-videos.com/zip/100mb.zip</string>
-		<key>title</key>
-		<string>100mb.zip</string>
-	</dict>
-	<dict>
-		<key>url</key>
 		<string>https://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_30mb.mp4</string>
 		<key>title</key>
 		<string>big_buck_bunny20mb.mp4</string>
-	</dict>
-	<dict>
-		<key>url</key>
-		<string>https://media.w3.org/2010/05/sintel/trailer.mp4</string>
-		<key>title</key>
-		<string>music</string>
-	</dict>
-	<dict>
-		<key>url</key>
-		<string>https://media.w3.org/2010/05/sintel/trailer.mp4</string>
-		<key>title</key>
-		<string>trailer.mp4</string>
 	</dict>
 	<dict>
 		<key>url</key>
