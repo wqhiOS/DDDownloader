@@ -22,9 +22,45 @@
 	</dict>
 	<dict>
 		<key>url</key>
-		<string>http://mirror.aarnet.edu.au/pub/TED-talks/911Mothers_2010W-480p.mp4</string>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201805/829d2330ff2747b4a4c9944815a02a8e_512.mp4</string>
 		<key>title</key>
-		<string>mothers.mp4</string>
+		<string>exercise.mp4</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201812/9cb79b03892d4ddb8962739aa8e31c50_512.mp4</string>
+		<key>title</key>
+		<string>magic.mp4</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201806/1fb9fa43b69c41be8e6346ab6dff0240_512.mp4</string>
+		<key>title</key>
+		<string>study.mp4</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201809/d76de90b215b4ed8af4becc315a962fd_512.mp4</string>
+		<key>title</key>
+		<string>magic2.mp4</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201809/53641a2055ac4e50adb7da091f6633da_512.mp4</string>
+		<key>title</key>
+		<string>magic3.mp4</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201809/934e5361b6144c3b91ef44f1007dcdb0_512.mp4</string>
+		<key>title</key>
+		<string>magic4.mp4</string>
+	</dict>
+	<dict>
+		<key>url</key>
+		<string>http://alivideo.g2s.cn/zhs_yanfa_150820/createcourse/demo/201805/be5de2d3506142aa98613c82fa39a94e_512.mp4</string>
+		<key>title</key>
+		<string>scenery.mp4</string>
 	</dict>
 </array>
 </plist>
