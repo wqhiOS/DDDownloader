@@ -55,7 +55,7 @@ static DDDownloadManager *_instance;
         self.downloadingTasks = [NSMutableArray array];
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:@"DDDownloader"];
-        config.timeoutIntervalForRequest = 10;
+//        config.timeoutIntervalForResource = 10;
         self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
 
         NSArray *sessionDownloadTask = [self sessionDownloadTasks];
@@ -229,6 +229,9 @@ static DDDownloadManager *_instance;
 }
 
 #pragma mark - NSURLSessionDelegate
+- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(nullable NSError *)error {
+    
+}
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
     NSLog(@"###### didFinishEventsForBackgroundURLSession");
     if (self.backgroundHandler) {
@@ -304,10 +307,8 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
         NSLog(@"errorCode: %ld",error.code);
         NSLog(@"%@",error.description);
         
-        
-        if (error.code == -999) {
-            
-            NSData *resumeData = error.userInfo[NSURLSessionDownloadTaskResumeData];
+        NSData *resumeData = error.userInfo[NSURLSessionDownloadTaskResumeData];
+        if (resumeData != nil) {
             [self setResumeDataWithUrl:url resumeData:resumeData];
             
             CGFloat progress = (task.countOfBytesReceived*1.0) / (task.countOfBytesExpectedToReceive*1.0);
@@ -318,12 +319,8 @@ expectedTotalBytes:(int64_t)expectedTotalBytes {
             [DDDownloadDBManager.sharedManager insertDownloadModel:downloadModel];
             
             [NSNotificationCenter.defaultCenter postNotificationName:downloadModel.url.DD_md5 object:nil userInfo:@{DD_NotificationModelKey:downloadModel}];
-            
-        }else if (error.code == 2) {
-            
-        }else {
-            
         }
+        
     }
     
     
